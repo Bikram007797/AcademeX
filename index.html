@@ -4,9 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="AcademeX">
-<meta name="theme-color" content="#0a0a1a">
+<meta name="theme-color" content="#07071a" id="meta-theme-color">
+<meta name="description" content="AcademeX — Smart Cloud Study Hub for exam preparation">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
 <title>AcademeX — Smart Study Hub</title>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -202,11 +205,15 @@ html, body {
 .topbar {
   display:flex; align-items:center; justify-content:space-between;
   padding:calc(var(--safe-top) + 14px) 20px 14px;
-  background: rgba(7,7,26,0.7);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-  position:relative; z-index:10;
+  background: var(--bg);
+  border-bottom:1px solid var(--border2);
+  position:sticky; top:0; z-index:10;
   flex-shrink:0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+[data-theme="light"] .topbar {
+  background: var(--bg);
+  box-shadow: 0 2px 12px rgba(100,80,200,0.08);
 }
 .topbar-logo { display:flex; align-items:center; gap:10px; }
 .topbar-icon {
@@ -248,10 +255,10 @@ html, body {
 .bottomnav {
   position:fixed; bottom:0; left:0; right:0; z-index:10;
   padding:10px 8px calc(var(--safe-bot) + 10px);
-  background: rgba(7,7,26,0.85);
-  backdrop-filter:blur(24px);
-  border-top:1px solid var(--border);
+  background: var(--bg);
+  border-top:1px solid var(--border2);
   display:flex; align-items:center; justify-content:space-around;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.15);
 }
 .nav-item {
   display:flex; flex-direction:column; align-items:center; gap:4px;
@@ -281,15 +288,15 @@ html, body {
 
 /* ===== PAGE HEADERS ===== */
 .page-title {
-  font-family:var(--font-head); font-size:26px; font-weight:800;
-  letter-spacing:1px; margin-bottom:4px;
+  font-family:var(--font-head); font-size:24px; font-weight:800;
+  letter-spacing:0.5px; margin-bottom:4px; line-height:1.2;
 }
-.page-sub { color:var(--text2); font-size:13px; margin-bottom:24px; }
+.page-sub { color:var(--text2); font-size:13px; margin-bottom:20px; line-height:1.5; }
 
 /* ===== DASHBOARD ===== */
-.greeting { margin-bottom:24px; }
-.greeting-name { font-family:var(--font-head); font-size:24px; font-weight:800; }
-.greeting-date { color:var(--text3); font-size:13px; font-family:var(--font-mono); margin-top:4px; }
+.greeting { margin-bottom:16px; }
+.greeting-name { font-family:var(--font-head); font-size:22px; font-weight:800; line-height:1.3; }
+.greeting-date { color:var(--text3); font-size:12px; font-family:var(--font-mono); margin-top:3px; }
 
 /* Goal card */
 .goal-card {
@@ -794,6 +801,25 @@ html, body {
 .view-btn{padding:6px 10px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:var(--surface);color:var(--text3);cursor:pointer;font-size:14px;transition:all 0.2s;}
 .view-btn.active{background:rgba(124,92,252,0.2);color:var(--accent);border-color:rgba(124,92,252,0.4);}
 .view-btn:active{transform:scale(0.95);}
+/* ===== EXAM FLASH BAR ===== */
+@keyframes flashShift {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes flashPulse {
+  0%,100%{opacity:1}
+  50%{opacity:0.7}
+}
+#exam-flash-bar { animation: flashPulse 1.5s ease-in-out infinite; }
+#exam-flash-inner .flash-dot {
+  width:7px;height:7px;border-radius:50%;background:var(--accent3);
+  animation:flashPulse 0.8s ease-in-out infinite;flex-shrink:0;
+}
+
+/* ===== SWIPE INDICATOR ===== */
+.swipe-hint { display:none; }
+
 .courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
 </style>
 </head>
@@ -863,6 +889,18 @@ html, body {
     <div class="topbar-right">
       <div class="topbar-btn" onclick="toggleTheme()" id="theme-btn">🌙</div>
       <div class="avatar-btn" onclick="openSidemenu()" id="avatar-display">🎓</div>
+    </div>
+  </div>
+
+  <!-- Exam Countdown Flash Box -->
+  <div id="exam-flash-bar" style="flex-shrink:0;display:none;overflow:hidden;height:36px;">
+    <div id="exam-flash-inner" style="height:36px;display:flex;align-items:center;justify-content:center;gap:10px;
+      background:linear-gradient(90deg,rgba(124,92,252,0.18),rgba(248,91,154,0.18),rgba(124,92,252,0.18));
+      background-size:200% 100%;
+      animation:flashShift 2s linear infinite;
+      border-bottom:1px solid rgba(124,92,252,0.25);
+      padding:0 16px;cursor:default;">
+      <span style="font-size:13px;font-weight:700;font-family:var(--font-head);letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80vw" id="exam-flash-text">⏳ — No Exam</span>
     </div>
   </div>
 
@@ -972,6 +1010,8 @@ html, body {
       <div class="row mb-16">
         <div class="page-title" style="margin-bottom:0">Exam Hub</div>
         <div class="spacer"></div>
+        <div class="view-btn active" id="exam-grid-btn" onclick="setExamView('grid')">⊞</div>
+        <div class="view-btn" id="exam-list-btn" onclick="setExamView('list')">☰</div>
       </div>
       <div class="filter-tabs">
         <div class="filter-tab active" onclick="filterExams('all',this)">All</div>
@@ -1419,6 +1459,7 @@ let courseView = 'grid';
 let courseFilter = 'all';
 let taskFilter = 'all';
 let examFilter = 'all';
+let examView = 'grid';
 let confirmCallback = null;
 let selectedExamColor = COLORS[0];
 let selectedCourseColor = COLORS[0];
@@ -1482,6 +1523,43 @@ async function loadFromFirebase() {
 }
 
 function save() { saveToFirebase(); }
+
+// ---- AUDIO FEEDBACK ----
+function playSound(type) {
+  try {
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const gain = ctx.createGain();
+    gain.connect(ctx.destination);
+    if(type==='task') {
+      // Happy chime: two quick rising notes
+      [440,660].forEach((f,i)=>{
+        const o=ctx.createOscillator(); o.type='sine'; o.frequency.value=f;
+        const g=ctx.createGain(); g.gain.setValueAtTime(0.15,ctx.currentTime+i*0.12);
+        g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.12+0.25);
+        o.connect(g); g.connect(ctx.destination);
+        o.start(ctx.currentTime+i*0.12); o.stop(ctx.currentTime+i*0.12+0.3);
+      });
+    } else if(type==='course') {
+      // Triumphant fanfare: ascending arpeggio
+      [330,440,550,660,880].forEach((f,i)=>{
+        const o=ctx.createOscillator(); o.type='triangle'; o.frequency.value=f;
+        const g=ctx.createGain(); g.gain.setValueAtTime(0.12,ctx.currentTime+i*0.09);
+        g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.09+0.3);
+        o.connect(g); g.connect(ctx.destination);
+        o.start(ctx.currentTime+i*0.09); o.stop(ctx.currentTime+i*0.09+0.35);
+      });
+    } else if(type==='achieve') {
+      // Achievement: sparkle arpeggio + sustain
+      [523,659,784,1047].forEach((f,i)=>{
+        const o=ctx.createOscillator(); o.type='sine'; o.frequency.value=f;
+        const g=ctx.createGain(); g.gain.setValueAtTime(0.13,ctx.currentTime+i*0.1);
+        g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.1+0.5);
+        o.connect(g); g.connect(ctx.destination);
+        o.start(ctx.currentTime+i*0.1); o.stop(ctx.currentTime+i*0.1+0.55);
+      });
+    }
+  } catch(e){}
+}
 
 // ---- HAPTIC ----
 function haptic(type='light') {
@@ -1688,6 +1766,7 @@ function refreshHome() {
   const hel = document.getElementById('home-exams-list');
   const upExams = DB.exams.filter(e=>e.status!=='Done').slice(0,3);
   hel.innerHTML = upExams.length ? upExams.map(e=>renderExamCard(e)).join('') : '<div class="empty-state"><div class="empty-icon">🏆</div><div class="empty-text">No upcoming exams</div></div>';
+  updateExamFlashBar();
 }
 
 // ---- HELPER FUNCTIONS ----
@@ -1737,16 +1816,24 @@ function examStatusEmoji(s) {
 }
 
 // ---- COVER PATTERNS ----
+function patColor() {
+  // Returns pattern color based on current theme
+  return document.documentElement.getAttribute('data-theme')==='light'
+    ? 'rgba(100,80,200,0.18)' : 'rgba(255,255,255,0.22)';
+}
 function getCoverPatterns() {
+  const c = patColor();
+  const c2 = document.documentElement.getAttribute('data-theme')==='light'
+    ? 'rgba(100,80,200,0.14)' : 'rgba(255,255,255,0.17)';
   return [
-    {id:'dots',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pd" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="8" cy="8" r="2" fill="rgba(255,255,255,0.22)"/></pattern></defs><rect width="100%" height="100%" fill="url(#pd)"/></svg>`},
-    {id:'grid',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pg" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0L0 0L0 20" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#pg)"/></svg>`},
-    {id:'lines',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pl" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M0 12L12 0" stroke="rgba(255,255,255,0.17)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#pl)"/></svg>`},
-    {id:'cross',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pc" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M10 0V20M0 10H20" stroke="rgba(255,255,255,0.13)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#pc)"/></svg>`},
-    {id:'hex',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="ph" width="28" height="24" patternUnits="userSpaceOnUse"><polygon points="14,2 26,9 26,19 14,26 2,19 2,9" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ph)"/></svg>`},
-    {id:'waves',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pw" width="40" height="16" patternUnits="userSpaceOnUse"><path d="M0 8 Q10 0 20 8 Q30 16 40 8" fill="none" stroke="rgba(255,255,255,0.17)" stroke-width="1.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#pw)"/></svg>`},
-    {id:'tri',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pt" width="20" height="20" patternUnits="userSpaceOnUse"><polygon points="10,2 18,18 2,18" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#pt)"/></svg>`},
-    {id:'zigzag',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pz" width="24" height="12" patternUnits="userSpaceOnUse"><polyline points="0,12 6,0 12,12 18,0 24,12" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#pz)"/></svg>`},
+    {id:'dots',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pd" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="8" cy="8" r="2" fill="${c}"/></pattern></defs><rect width="100%" height="100%" fill="url(#pd)"/></svg>`},
+    {id:'grid',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pg" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0L0 0L0 20" fill="none" stroke="${c2}" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#pg)"/></svg>`},
+    {id:'lines',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pl" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M0 12L12 0" stroke="${c2}" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#pl)"/></svg>`},
+    {id:'cross',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pc" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M10 0V20M0 10H20" stroke="${c2}" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#pc)"/></svg>`},
+    {id:'hex',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="ph" width="28" height="24" patternUnits="userSpaceOnUse"><polygon points="14,2 26,9 26,19 14,26 2,19 2,9" fill="none" stroke="${c2}" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ph)"/></svg>`},
+    {id:'waves',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pw" width="40" height="16" patternUnits="userSpaceOnUse"><path d="M0 8 Q10 0 20 8 Q30 16 40 8" fill="none" stroke="${c2}" stroke-width="1.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#pw)"/></svg>`},
+    {id:'tri',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pt" width="20" height="20" patternUnits="userSpaceOnUse"><polygon points="10,2 18,18 2,18" fill="none" stroke="${c2}" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#pt)"/></svg>`},
+    {id:'zigzag',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pz" width="24" height="12" patternUnits="userSpaceOnUse"><polyline points="0,12 6,0 12,12 18,0 24,12" fill="none" stroke="${c2}" stroke-width="1.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#pz)"/></svg>`},
   ];
 }
 
@@ -1883,9 +1970,11 @@ function refreshCourses() {
   if(courseFilter!=='all') filtered = filtered.filter(c=>c.status.toLowerCase().replace(/ /g,'-')===courseFilter);
   if(courseView==='grid') {
     grid.className='courses-grid';
+    grid.style.cssText='display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;';
     grid.innerHTML = filtered.length ? filtered.map(c=>renderCourseCard(c,false)).join('') : '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">📚</div><div class="empty-text">No courses yet. Tap ＋ to add one!</div></div>';
   } else {
     grid.className='';
+    grid.style.cssText='display:flex;flex-direction:column;gap:0;';
     grid.innerHTML = filtered.length ? filtered.map(c=>renderCourseCard(c,false)).join('') : '<div class="empty-state"><div class="empty-icon">📚</div><div class="empty-text">No courses yet. Tap ＋ to add one!</div></div>';
   }
 }
@@ -1924,15 +2013,76 @@ function refreshCourseDetail() {
   list.innerHTML = filtered.length ? filtered.map(t=>renderTaskItem(t)).join('') : '<div class="empty-state"><div class="empty-icon">📝</div><div class="empty-text">No assignments yet</div></div>';
 }
 
+function setExamView(v){haptic();examView=v;document.getElementById('exam-grid-btn').classList.toggle('active',v==='grid');document.getElementById('exam-list-btn').classList.toggle('active',v==='list');refreshExams();}
+
 // ---- EXAMS ----
 function refreshExams() {
   const list = document.getElementById('exams-list');
   let filtered = DB.exams;
   if(examFilter!=='all') filtered = filtered.filter(e=>e.status.toLowerCase().replace(/ /g,'-')===examFilter);
-  list.innerHTML = filtered.length ? filtered.map(e=>renderExamCard(e)).join('') : '<div class="empty-state"><div class="empty-icon">🏆</div><div class="empty-text">No exams yet. Tap ＋ to schedule one!</div></div>';
+  if(examView==='grid') {
+    list.style.cssText='display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;';
+    list.innerHTML = filtered.length ? filtered.map(e=>renderExamCard(e)).join('') : '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🏆</div><div class="empty-text">No exams yet. Tap ＋ to schedule one!</div></div>';
+  } else {
+    list.style.cssText='display:flex;flex-direction:column;gap:0;';
+    list.innerHTML = filtered.length ? filtered.map(e=>renderExamCard(e)).join('') : '<div class="empty-state"><div class="empty-icon">🏆</div><div class="empty-text">No exams yet. Tap ＋ to schedule one!</div></div>';
+  }
+  updateExamFlashBar();
 }
 
-// ---- ANALYTICS ----
+// ---- EXAM FLASH BAR ----
+let _flashTimer = null;
+let _flashIndex = 0;
+let _flashExams = [];
+
+function updateExamFlashBar() {
+  const bar = document.getElementById('exam-flash-bar');
+  const textEl = document.getElementById('exam-flash-text');
+  if(!bar || !textEl) return;
+  clearInterval(_flashTimer);
+
+  // Auto-complete past exams
+  const today = new Date(); today.setHours(0,0,0,0);
+  let changed = false;
+  DB.exams.forEach(e => {
+    if(e.date && new Date(e.date+' 00:00') < today && e.status !== 'Done') {
+      e.status = 'Done'; changed = true;
+    }
+  });
+  if(changed) { save(); }
+
+  // Find upcoming exams (not done, have date, not past)
+  const upcoming = DB.exams
+    .filter(e => e.status !== 'Done' && e.date)
+    .map(e => ({...e, days: daysUntil(e.date)}))
+    .filter(e => e.days >= 0)
+    .sort((a,b) => a.days - b.days);
+
+  if(!upcoming.length) {
+    bar.style.display = 'block';
+    textEl.innerHTML = `<span class="flash-dot"></span>&nbsp;📭 No Upcoming Exams&nbsp;<span class="flash-dot"></span>`;
+    return;
+  }
+
+  // Group by min date (tie: show all on same date cycling)
+  const minDays = upcoming[0].days;
+  _flashExams = upcoming.filter(e => e.days === minDays);
+  _flashIndex = 0;
+  bar.style.display = 'block';
+
+  function showFlash() {
+    const e = _flashExams[_flashIndex % _flashExams.length];
+    const dStr = e.days === 0 ? '🔥 TODAY!' : `⏳ ${e.days}d left`;
+    textEl.innerHTML = `<span class="flash-dot"></span>&nbsp;🎯 <strong>${e.name}</strong> — ${dStr}&nbsp;<span class="flash-dot"></span>`;
+    _flashIndex++;
+  }
+  showFlash();
+  if(_flashExams.length > 1) {
+    _flashTimer = setInterval(showFlash, 3000);
+  }
+}
+
+
 function refreshAnalytics() {
   const total=DB.tasks.length, done=DB.tasks.filter(t=>t.done).length;
   document.getElementById('a-total-tasks').textContent=total;
@@ -2012,6 +2162,7 @@ function checkAchievements() {
 
 function showAchievementPopup(a) {
   haptic('success');
+  playSound('achieve');
   const popup=document.getElementById('achieve-popup');
   document.getElementById('achieve-popup-icon').textContent=a.icon;
   document.getElementById('achieve-popup-name').textContent=a.name;
@@ -2164,6 +2315,14 @@ function saveTask() {
   }
   save(); closeModal('task-modal');
   refreshAll(); if(currentCourseId) refreshCourseDetail();
+  // Check if course reached 100%
+  if(data.done !== false) {
+    const cid = data.courseId || (editingTaskId ? DB.tasks.find(t=>t.id===editingTaskId)?.courseId : null);
+    if(cid) {
+      const ct = DB.tasks.filter(t=>t.courseId===cid);
+      if(ct.length && ct.every(t=>t.done)) { playSound('course'); showToast('🏆','Course 100% Complete! Amazing!'); confetti(); }
+    }
+  }
 }
 
 function deleteCurrentTask() {
@@ -2183,7 +2342,10 @@ function toggleTask(id) {
   t.done = !t.done;
   if(t.done) recordActivity();
   save(); checkAchievements();
-  if(t.done) { showToast('🎉','Task completed! Great work!'); confetti(); }
+  if(t.done) { showToast('🎉','Task completed! Great work!'); confetti(); playSound('task'); haptic('success');
+    const ct=DB.tasks.filter(x=>x.courseId===t.courseId);
+    if(ct.length && ct.every(x=>x.done)) { setTimeout(()=>{playSound('course');showToast('🏆','Course 100% Complete! 🎉');},600); }
+  }
   refreshAll(); if(currentCourseId) refreshCourseDetail();
 }
 
@@ -2353,6 +2515,8 @@ function toggleTheme(){
 }
 function applyTheme(t){
   document.documentElement.setAttribute('data-theme',t==='light'?'light':'');
+  const metaTheme = document.getElementById('meta-theme-color');
+  if(metaTheme) metaTheme.content = t==='light' ? '#f0eefc' : '#07071a';
 }
 
 // ---- SIDEMENU ----
@@ -2445,8 +2609,29 @@ document.querySelectorAll('.modal-overlay').forEach(o=>{
   o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
 });
 
-// Nav highlight
-document.getElementById('nav-home').classList.add('active');
-</script></script>
+// ---- SWIPE NAVIGATION ----
+(function(){
+  const NAV_ORDER = ['home','courses','exams','analytics'];
+  let _sx=0, _sy=0, _st=0;
+  document.getElementById('main-app').addEventListener('touchstart', e=>{
+    if(e.touches.length!==1) return;
+    _sx=e.touches[0].clientX; _sy=e.touches[0].clientY; _st=Date.now();
+  },{passive:true});
+  document.getElementById('main-app').addEventListener('touchend', e=>{
+    if(e.changedTouches.length!==1) return;
+    const dx=e.changedTouches[0].clientX-_sx;
+    const dy=e.changedTouches[0].clientY-_sy;
+    const dt=Date.now()-_st;
+    // Only horizontal swipes in middle of screen, not on modals/inputs
+    if(Math.abs(dx)<60||Math.abs(dy)>Math.abs(dx)*0.8||dt>400) return;
+    if(e.target.closest('.modal-overlay,.modal,.topbar,.bottomnav,input,textarea,select,.filter-tabs')) return;
+    const idx=NAV_ORDER.indexOf(currentPage);
+    if(dx<0 && idx<NAV_ORDER.length-1) { haptic('light'); navTo(NAV_ORDER[idx+1]); }
+    else if(dx>0 && idx>0) { haptic('light'); navTo(NAV_ORDER[idx-1]); }
+  },{passive:true});
+})();
+
+
+</script>
 </body>
 </html>
