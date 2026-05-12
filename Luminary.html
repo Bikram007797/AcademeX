@@ -2091,9 +2091,10 @@ function renderCourseCard(c, compact) {
     <div class="course-body" onclick="openCourseDetail('${c.id}')">
       <div class="course-name" style="font-family:var(--font-head);font-size:16px;font-weight:700;margin-bottom:6px">${c.name}</div>
       <div class="course-meta">
-        <span class="badge" style="background:rgba(200,134,10,0.1);color:var(--accent);border:1px solid rgba(200,134,10,0.2)">${c.exam||'General'}</span>
+       
         <span class="badge" style="background:rgba(255,255,255,0.05);color:var(--text2);border:1px solid var(--border)">${c.status}</span>
       </div>
+              ${c.date?`<span style="font-size:12px;font-weight:700;padding:3px 10px;border-radius:6px;background:rgba(200,134,10,0.12);color:var(--accent)">📅 ${formatDate(c.date)}</span>`:''}
       <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px;margin-bottom:8px">${targetStr}${examTag}</div>
       <div style="display:flex;justify-content:space-between;margin-bottom:6px">
         <span style="font-size:11px;color:var(--text3)">Progress</span>
