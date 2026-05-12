@@ -658,13 +658,6 @@ html, body {
   overflow: hidden; display: flex; flex-direction: column;
   animation: modalSlideIn 0.35s cubic-bezier(0.4,0,0.2,1);
 }
-.modal-header { padding: 16px 20px 12px; flex-shrink: 0; }
-.modal-body {
-  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
-  padding: 4px 20px 8px; display: flex; flex-direction: column; gap: 0;
-}
-.modal-body::-webkit-scrollbar { display: none; }
-.form-group { margin-bottom: 16px; }
 @keyframes modalSlideIn { from{transform:translateY(100%)} to{transform:translateY(0)} }
 
 .modal-handle { width: 36px; height: 4px; background: var(--bg3); border-radius: 99px; margin: 12px auto 0; flex-shrink: 0; }
@@ -744,7 +737,7 @@ html, body {
   font-family:var(--font-body); font-size:15px;
   transition:all 0.3s; outline:none;
 }
-.form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,134,10,0.1); }
+.form-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,92,252,0.12); }
 .form-select {
   width:100%; padding:13px 16px;
   background:var(--surface); border:1px solid var(--border);
@@ -763,7 +756,7 @@ html, body {
   font-family:var(--font-body); font-size:15px; resize:vertical; min-height:80px;
   outline:none; transition:all 0.3s;
 }
-.form-textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,134,10,0.1); }
+.form-textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,92,252,0.12); }
 /* Segmented */
 .seg-group { display:flex; gap:6px; flex-wrap:wrap; }
 .seg-btn {
@@ -771,7 +764,7 @@ html, body {
   letter-spacing:0.5px; border:1px solid var(--border); background:var(--surface); color:var(--text2);
   cursor:pointer; transition:all 0.2s;
 }
-.seg-btn.active { background: #1a150f; color: var(--gold); border-color: #1a150f; }
+.seg-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 /* Color swatches */
 .color-swatches { display:flex; gap:10px; flex-wrap:wrap; }
 .color-swatch {
@@ -786,7 +779,7 @@ html, body {
   background:var(--surface); border:1px solid var(--border);
   border-radius:var(--radius-sm); cursor:pointer; transition:all 0.2s;
 }
-.course-check-item.selected { border-color: var(--accent); background: rgba(200,134,10,0.06); }
+.course-check-item.selected { border-color:var(--accent); background:rgba(124,92,252,0.08); }
 .course-check-icon { width:20px; height:20px; border-radius:6px; border:2px solid var(--border2); display:flex; align-items:center; justify-content:center; font-size:11px; transition:all 0.2s; }
 .course-check-item.selected .course-check-icon { background:var(--accent); border-color:var(--accent); color:#fff; }
 
@@ -838,8 +831,8 @@ html, body {
 .achieve-title { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 4px; text-transform: uppercase; }
 .achieve-name  { font-family: var(--font-head); font-size: 16px; font-weight: 400; color: var(--text); }
 /* ===== CONFIRM DIALOG ===== */
-.confirm-modal { max-width:340px; margin:auto auto 0; border-radius:var(--radius) var(--radius) 0 0; }
-.confirm-overlay { align-items: flex-end; }
+.confirm-modal { max-width:340px; margin:auto; border-radius:var(--radius); bottom:50%; top:auto; transform:translateY(0); }
+.confirm-overlay { align-items:center; }
 
 /* ===== SIDE MENU ===== */
 .sidemenu {
@@ -935,7 +928,8 @@ html, body {
 .cc-exam-tag{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;background:rgba(124,92,252,0.12);color:var(--accent);border:1px solid rgba(124,92,252,0.2);border-radius:5px;padding:2px 7px;}
 .cc-target-date{font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:5px;background:rgba(245,200,66,0.1);color:var(--gold);border:1px solid rgba(245,200,66,0.2);}
 .cc-cover-gradient{position:absolute;inset:0;}
-.pattern-btn.selected{border-color:var(--accent) !important;box-shadow:0 0 8px rgba(200,134,10,0.3);}
+.pattern-btn.selected{border-color:var(--accent) !important;box-shadow:0 0 8px rgba(124,92,252,0.4);}
+/* View buttons */
 /* ===== EXAM FLASH BAR ===== */
 @keyframes flashShift {
   0%{background-position:0% 50%}
@@ -955,91 +949,49 @@ html, body {
 /* ===== SWIPE INDICATOR ===== */
 .swipe-hint { display:none; }
 
-.courses-grid{display:grid;grid-template-columns:1fr;gap:12px;}
+.courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
 
-/* ===== LAYOUT: STATS GRID ===== */
-.stats-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;
+/* ===== LINK COURSES DROPDOWN ===== */
+.course-dropdown-wrap { position: relative; }
+.course-dropdown-trigger {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  cursor: pointer; font-size: 14px; color: var(--text2);
+  transition: border-color 0.15s;
 }
-.stats-row {
-  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px;
+.course-dropdown-trigger:hover { border-color: var(--accent); }
+.course-dropdown-arrow { font-size: 12px; color: var(--text3); transition: transform 0.2s; }
+.course-dropdown-arrow.open { transform: rotate(180deg); }
+.course-dropdown-list {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); margin-top: 4px;
+  max-height: 220px; overflow-y: auto; -webkit-overflow-scrolling: touch;
 }
-
-/* ===== LAYOUT: TOPBAR ===== */
-.topbar-logo { display: flex; align-items: center; gap: 10px; }
-.topbar-right { display: flex; align-items: center; gap: 8px; }
-
-/* ===== LAYOUT: BAR CHART ===== */
-.bar-row {
-  display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+.course-dropdown-list::-webkit-scrollbar { display: none; }
+.course-dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px; cursor: pointer; transition: background 0.12s;
+  border-bottom: 1px solid var(--bg3); font-size: 13px; color: var(--text);
 }
-.bar-label { font-size: 11px; color: var(--text2); width: 70px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-mono); flex-shrink: 0; }
-.bar-track { flex: 1; height: 8px; background: var(--bg3); border-radius: 99px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 99px; transition: width 1s ease; }
-.bar-val { font-size: 11px; color: var(--text3); font-family: var(--font-mono); width: 30px; text-align: right; flex-shrink: 0; }
-
-/* ===== LAYOUT: DONUT CHART ===== */
-.donut-wrap { display: flex; align-items: center; gap: 20px; }
-.donut-svg { width: 110px; height: 110px; flex-shrink: 0; }
-.donut-legend { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-.legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text2); }
-.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-
-/* ===== LAYOUT: MINI CALENDAR ===== */
-.mini-calendar {
-  display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px;
+.course-dropdown-item:last-child { border-bottom: none; }
+.course-dropdown-item:hover { background: var(--bg2); }
+.course-dropdown-item.selected { background: rgba(200,134,10,0.06); }
+.course-dropdown-check {
+  width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0;
+  border: 2px solid var(--border2); background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 900; transition: all 0.15s;
 }
-
-/* ===== LAYOUT: ACHIEVEMENT GRID ===== */
-.achievement-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+.course-dropdown-item.selected .course-dropdown-check {
+  background: var(--accent); border-color: var(--accent); color: white;
 }
-
-/* ===== LAYOUT: SETTINGS SECTION ===== */
-.settings-section { margin-bottom: 24px; }
-
-/* ===== LAYOUT: COURSE COVER ===== */
-.course-cover { height: 90px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-.course-body { padding: 12px 14px 10px; }
-
-/* ===== FIX: cc-status-badge warm colors ===== */
-.cc-status-badge {
-  position: absolute; top: 8px; right: 10px;
-  padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700;
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  letter-spacing: 0.04em;
+.linked-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 600;
+  background: rgba(200,134,10,0.1); border: 1px solid rgba(200,134,10,0.25);
+  color: var(--accent);
 }
-.s-not-started { background: rgba(154,140,126,0.25) !important; color: var(--text3) !important; }
-.s-in-progress { background: rgba(200,134,10,0.2) !important; color: var(--accent) !important; }
-.s-complete    { background: rgba(45,106,79,0.2) !important; color: var(--green) !important; }
-.s-paused      { background: rgba(181,56,74,0.2) !important; color: var(--red) !important; }
-.p-high        { background: rgba(181,56,74,0.1) !important; color: var(--red) !important; }
-.p-medium      { background: rgba(200,134,10,0.1) !important; color: var(--accent) !important; }
-.p-low         { background: rgba(45,106,79,0.1) !important; color: var(--green) !important; }
-.days-over     { background: rgba(181,56,74,0.1) !important; color: var(--red) !important; }
-.days-soon     { background: rgba(200,134,10,0.1) !important; color: var(--accent) !important; }
-.days-ok       { background: rgba(45,106,79,0.1) !important; color: var(--green) !important; }
-
-/* ===== FIX: exam/course card min-height on cover ===== */
-.exam-grid-wrap { display: grid; grid-template-columns: 1fr; gap: 12px; }
-
-/* ===== FIX: form inputs in dark mode ===== */
-[data-theme="light"] .form-input,
-[data-theme="light"] .form-select,
-[data-theme="light"] .form-textarea,
-[data-theme="light"] .inp-group input {
-  background: var(--bg2);
-  border-color: var(--border);
-  color: var(--text);
-}
-
-/* ===== FIX: page padding bottom for nav ===== */
-.page {
-  padding-bottom: calc(80px + var(--safe-bot)) !important;
-}
-
-/* ===== ANALYTICS ACHIEVEMENTS ===== */
-.achievements-section { margin-top: 8px; }
 
 </style>
 </head>
@@ -1113,14 +1065,18 @@ html, body {
   </div>
 
   <!-- Exam Countdown Flash Box -->
-  <div id="exam-flash-bar" style="flex-shrink:0;display:none;overflow:hidden;height:36px;">
-    <div id="exam-flash-inner" style="height:36px;display:flex;align-items:center;justify-content:center;gap:10px;
-      background:linear-gradient(90deg,rgba(200,134,10,0.12),rgba(45,106,79,0.1),rgba(200,134,10,0.12));
-      background-size:200% 100%;
-      animation:flashShift 2s linear infinite;
-      border-bottom:1px solid rgba(200,134,10,0.2);
-      padding:0 16px;cursor:default;">
-      <span style="font-size:16px;font-weight:700;font-family:var(--font-head);letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80vw" id="exam-flash-text">⏳ — No Exam</span>
+  <div id="exam-flash-bar" style="flex-shrink:0;display:none;overflow:hidden;">
+    <div id="exam-flash-inner" style="
+      min-height:48px; padding:10px 16px;
+      display:flex;align-items:center;justify-content:center;gap:10px;
+      background:linear-gradient(90deg,#7c2d12,#b45309,#15803d,#b45309,#7c2d12);
+      background-size:300% 100%;
+      animation:flashShift 3s linear infinite;
+      position:relative;overflow:hidden;cursor:default;">
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.03) 2px,transparent 2px,transparent 10px);pointer-events:none"></div>
+      <span style="font-size:11px;font-weight:800;color:rgba(255,220,100,0.9);letter-spacing:0.15em;text-transform:uppercase;flex-shrink:0;font-family:var(--font-mono)">EXAM</span>
+      <span style="font-size:14px;font-weight:700;font-family:var(--font-head);color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60vw;text-shadow:0 1px 8px rgba(0,0,0,0.4)" id="exam-flash-text">⏳ Loading...</span>
+      <span id="exam-flash-days" style="flex-shrink:0;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:6px;padding:3px 10px;font-size:12px;font-weight:800;color:#fef08a;font-family:var(--font-mono);letter-spacing:0.05em"></span>
     </div>
   </div>
 
@@ -1128,7 +1084,7 @@ html, body {
   <div class="pages">
     <!-- DASHBOARD -->
     <div class="page active" id="page-home">
-      <div class="greeting" style="margin-bottom:16px">
+      <div class="greeting">
         <div class="greeting-name" id="greeting-text">Good morning 👋</div>
         <div class="greeting-date" id="greeting-date">—</div>
       </div>
@@ -1547,7 +1503,14 @@ html, body {
       </div>
       <div class="form-group">
         <label class="form-label">Link Courses</label>
-        <div class="course-check-list" id="em-course-list"></div>
+        <div class="course-dropdown-wrap">
+          <div class="course-dropdown-trigger" onclick="toggleCourseDropdown()">
+            <span id="em-course-trigger-label">Select courses to link</span>
+            <span class="course-dropdown-arrow" id="em-dropdown-arrow">▾</span>
+          </div>
+          <div class="course-dropdown-list" id="em-course-list" style="display:none"></div>
+        </div>
+        <div id="em-selected-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div>
       </div>
       <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="em-notes" placeholder="Optional notes..."></textarea></div>
     </div>
@@ -1597,7 +1560,7 @@ html, body {
 
 <!-- Add picker (FAB) -->
 <div class="modal-overlay" id="add-picker-modal">
-  <div class="modal" >
+  <div class="modal" style="border-radius:var(--radius) var(--radius) 0 0">
     <div class="modal-handle"></div>
     <div class="modal-header"><div class="modal-title">Add New</div></div>
     <div class="modal-body" style="display:flex;flex-direction:column;gap:12px;padding-bottom:20px">
@@ -2027,6 +1990,18 @@ function statusEmoji(s) {
   if(s==='Paused') return '⏸';
   return '📖';
 }
+function statusCls_bg(s) {
+  if(s==='In Progress') return 'rgba(200,134,10,0.12)';
+  if(s==='Complete') return 'rgba(45,106,79,0.12)';
+  if(s==='Paused') return 'rgba(181,56,74,0.10)';
+  return 'rgba(154,140,126,0.15)';
+}
+function statusCls_col(s) {
+  if(s==='In Progress') return 'var(--accent)';
+  if(s==='Complete') return 'var(--green)';
+  if(s==='Paused') return 'var(--red)';
+  return 'var(--text3)';
+}
 function examStatusEmoji(s) {
   if(s==='Done') return '✅';
   if(s==='In Progress') return '🔥';
@@ -2037,22 +2012,25 @@ function examStatusEmoji(s) {
 
 // ---- COVER PATTERNS ----
 function patColor() {
+  // data-theme="light" = dark mode in Luminary; no attr = light mode
   const isDark = document.documentElement.getAttribute('data-theme') === 'light';
-  return isDark ? 'rgba(255,255,255,0.22)' : 'rgba(26,21,15,0.18)';
+  return isDark ? 'rgba(255,255,255,0.30)' : 'rgba(26,21,15,0.22)';
 }
-function getCoverPatterns() {
-  const c = patColor();
+function getCoverPatterns(uid) {
+  // uid makes SVG pattern IDs unique per card — critical fix for multiple cards
+  const s = uid || 'x';
   const isDark = document.documentElement.getAttribute('data-theme') === 'light';
-  const c2 = isDark ? 'rgba(255,255,255,0.17)' : 'rgba(26,21,15,0.14)';
+  const c  = isDark ? 'rgba(255,255,255,0.30)' : 'rgba(26,21,15,0.22)';
+  const c2 = isDark ? 'rgba(255,255,255,0.22)' : 'rgba(26,21,15,0.16)';
   return [
-    {id:'dots',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pd" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="8" cy="8" r="2" fill="${c}"/></pattern></defs><rect width="100%" height="100%" fill="url(#pd)"/></svg>`},
-    {id:'grid',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pg" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0L0 0L0 20" fill="none" stroke="${c2}" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#pg)"/></svg>`},
-    {id:'lines',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pl" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M0 12L12 0" stroke="${c2}" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#pl)"/></svg>`},
-    {id:'cross',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pc" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M10 0V20M0 10H20" stroke="${c2}" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#pc)"/></svg>`},
-    {id:'hex',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="ph" width="28" height="24" patternUnits="userSpaceOnUse"><polygon points="14,2 26,9 26,19 14,26 2,19 2,9" fill="none" stroke="${c2}" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ph)"/></svg>`},
-    {id:'waves',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pw" width="40" height="16" patternUnits="userSpaceOnUse"><path d="M0 8 Q10 0 20 8 Q30 16 40 8" fill="none" stroke="${c2}" stroke-width="1.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#pw)"/></svg>`},
-    {id:'tri',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pt" width="20" height="20" patternUnits="userSpaceOnUse"><polygon points="10,2 18,18 2,18" fill="none" stroke="${c2}" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#pt)"/></svg>`},
-    {id:'zigzag',svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pz" width="24" height="12" patternUnits="userSpaceOnUse"><polyline points="0,12 6,0 12,12 18,0 24,12" fill="none" stroke="${c2}" stroke-width="1.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#pz)"/></svg>`},
+    {id:'dots',   svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pd${s}" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="8" cy="8" r="2.5" fill="${c}"/></pattern></defs><rect width="100%" height="100%" fill="url(#pd${s})"/></svg>`},
+    {id:'grid',   svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pg${s}" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0L0 0L0 20" fill="none" stroke="${c2}" stroke-width="1.2"/></pattern></defs><rect width="100%" height="100%" fill="url(#pg${s})"/></svg>`},
+    {id:'lines',  svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pl${s}" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M0 12L12 0" stroke="${c2}" stroke-width="1.2"/></pattern></defs><rect width="100%" height="100%" fill="url(#pl${s})"/></svg>`},
+    {id:'cross',  svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pc${s}" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M10 0V20M0 10H20" stroke="${c2}" stroke-width="1.2"/></pattern></defs><rect width="100%" height="100%" fill="url(#pc${s})"/></svg>`},
+    {id:'hex',    svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="ph${s}" width="28" height="24" patternUnits="userSpaceOnUse"><polygon points="14,2 26,9 26,19 14,26 2,19 2,9" fill="none" stroke="${c2}" stroke-width="1.2"/></pattern></defs><rect width="100%" height="100%" fill="url(#ph${s})"/></svg>`},
+    {id:'waves',  svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pw${s}" width="40" height="16" patternUnits="userSpaceOnUse"><path d="M0 8 Q10 0 20 8 Q30 16 40 8" fill="none" stroke="${c2}" stroke-width="1.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#pw${s})"/></svg>`},
+    {id:'tri',    svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pt${s}" width="20" height="20" patternUnits="userSpaceOnUse"><polygon points="10,2 18,18 2,18" fill="none" stroke="${c2}" stroke-width="1.2"/></pattern></defs><rect width="100%" height="100%" fill="url(#pt${s})"/></svg>`},
+    {id:'zigzag', svg:`<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="pz${s}" width="24" height="12" patternUnits="userSpaceOnUse"><polyline points="0,12 6,0 12,12 18,0 24,12" fill="none" stroke="${c2}" stroke-width="1.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#pz${s})"/></svg>`},
   ];
 }
 
@@ -2068,41 +2046,39 @@ function renderCourseCard(c, compact) {
   const emoji = statusEmoji(c.status);
   let coverInner = '';
   if(coverType==='pattern') {
-    const pat = getCoverPatterns().find(p=>p.id===coverVal)||getCoverPatterns()[0];
+    const pat = getCoverPatterns(c.id).find(p=>p.id===coverVal)||getCoverPatterns(c.id)[0];
     coverInner = `<div style="position:absolute;inset:0;background:${grad}"></div>
-      <div style="position:absolute;inset:0;opacity:0.4">${pat.svg}</div>
-      <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 10px rgba(0,0,0,0.7))">${emoji}</div>
+      <div style="position:absolute;inset:0;opacity:0.55">${pat.svg}</div>
+      <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5))">${emoji}</div>
       <div class="cc-status-badge ${statusClass(c.status)}">${c.status}</div>`;
   } else {
     coverInner = `<div class="cc-cover-gradient" style="background:${grad}"></div>
-      <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 10px rgba(0,0,0,0.7))">${emoji}</div>
+      <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5))">${emoji}</div>
       <div class="cc-status-badge ${statusClass(c.status)}">${c.status}</div>`;
   }
   const linkedExam = DB.exams.find(e=>e.linkedCourses&&e.linkedCourses.includes(c.id));
   const examTag = linkedExam ? `<div class="cc-exam-tag">🏆 ${linkedExam.name}</div>` : '';
   const targetStr = c.date ? `<span class="cc-target-date">📅 ${formatDate(c.date)}</span>` : '';
   const priorityLabel = c.priority||'Medium';
-  return `<div class="course-card" style="margin-bottom:14px;">
-    <div class="course-cover" onclick="openCourseDetail('${c.id}')">${coverInner}</div>
+  return `<div class="course-card" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all 0.3s;margin-bottom:14px;">
+    <div class="course-cover" style="height:115px;position:relative;overflow:hidden;" onclick="openCourseDetail('${c.id}')">${coverInner}</div>
     <div class="course-body" onclick="openCourseDetail('${c.id}')">
-      <div class="course-name" style="font-family:var(--font-head);font-size:16px;font-weight:700;margin-bottom:6px">${c.name}</div>
-      <div class="course-meta">
-        <span class="badge" style="background:rgba(200,134,10,0.1);color:var(--accent);border:1px solid rgba(200,134,10,0.2)">${c.exam||'General'}</span>
-        <span class="badge" style="background:rgba(255,255,255,0.05);color:var(--text2);border:1px solid var(--border)">${c.status}</span>
+      <div class="course-name" style="font-family:var(--font-head);font-size:16px;font-weight:400;margin-bottom:8px;line-height:1.3">${c.name}</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+        <span style="font-size:12px;font-weight:700;padding:3px 10px;border-radius:6px;background:${statusCls_bg(c.status)};color:${statusCls_col(c.status)}">${c.status}</span>
+        ${c.date?`<span style="font-size:12px;font-weight:700;padding:3px 10px;border-radius:6px;background:rgba(200,134,10,0.12);color:var(--accent)">📅 ${formatDate(c.date)}</span>`:''}
+        <span style="margin-left:auto;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;background:${priorityLabel==='High'?'rgba(181,56,74,0.1)':priorityLabel==='Low'?'rgba(45,106,79,0.1)':'rgba(200,134,10,0.1)'};color:${priorityLabel==='High'?'var(--red)':priorityLabel==='Low'?'var(--green)':'var(--accent)'}">${priorityLabel}</span>
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px;margin-bottom:8px">${targetStr}${examTag}</div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-        <span style="font-size:11px;color:var(--text3)">Progress</span>
-        <span style="font-size:11px;color:var(--text2);font-weight:600">${done}/${tasks.length} done</span>
+      ${linkedExam?`<div style="display:flex;align-items:center;gap:5px;margin-bottom:8px"><span style="font-size:11px;font-weight:700;padding:2px 10px;border-radius:5px;background:rgba(200,134,10,0.08);color:var(--accent);border:1px solid rgba(200,134,10,0.2)">🏆 ${linkedExam.name}</span></div>`:''}
+      <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+        <span style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">Progress</span>
+        <span style="font-size:11px;color:var(--text2);font-weight:700;font-family:var(--font-mono)">${done}/${tasks.length} done</span>
       </div>
-      <div class="course-progress"><div class="progress-bar" style="height:6px;background:var(--surface2);border-radius:99px;overflow:hidden"><div class="progress-fill" style="height:6px;width:${pct}%;background:${col};border-radius:99px;box-shadow:0 0 8px ${hexToRgba(col,0.5)};transition:width 0.9s ease"></div></div></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
-        <span style="font-size:12px;color:var(--text3)"><strong style="color:var(--text2)">${pct}%</strong> complete</span>
-        <span class="badge" style="background:${priorityLabel==='High'?'rgba(255,91,110,0.12)':priorityLabel==='Low'?'rgba(61,255,160,0.12)':'rgba(255,159,67,0.12)'};color:${priorityLabel==='High'?'var(--red)':priorityLabel==='Low'?'var(--green)':'var(--orange)'};font-size:11px">${priorityLabel}</span>
-      </div>
+      <div class="course-progress"><div class="progress-bar" style="height:6px;background:var(--bg3);border-radius:99px;overflow:hidden"><div class="progress-fill" style="height:6px;width:${pct}%;background:${col};border-radius:99px;box-shadow:0 0 8px ${hexToRgba(col,0.4)};transition:width 0.9s ease"></div></div></div>
+      <div style="margin-top:5px;font-size:11px;color:var(--text3);font-family:var(--font-mono)">${pct}% complete</div>
     </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-top:1px solid var(--border);background:var(--bg2)">
-      <button onclick="event.stopPropagation();openTaskModal(null,'${c.id}')" style="display:flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--accent2);background:rgba(45,106,79,0.08);border:1px solid rgba(45,106,79,0.2);border-radius:7px;padding:4px 10px;cursor:pointer;font-family:var(--font-body)">＋ Add Task</button>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-top:1px solid var(--border);background:rgba(0,0,0,0.15)">
+      <button onclick="event.stopPropagation();openTaskModal(null,'${c.id}')" style="display:flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--accent2);background:rgba(91,141,248,0.08);border:1px solid rgba(91,141,248,0.2);border-radius:7px;padding:4px 10px;cursor:pointer;font-family:var(--font-body)">＋ Add Task</button>
       <button onclick="event.stopPropagation();openCourseModal('${c.id}')" style="width:28px;height:28px;border-radius:7px;background:var(--surface2);border:1px solid var(--border2);color:var(--text3);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center">✏️</button>
     </div>
   </div>`;
@@ -2113,11 +2089,11 @@ function renderTaskItem(t) {
   const course = DB.courses.find(c=>c.id===t.courseId);
   const now = new Date(); now.setHours(0,0,0,0);
   const isOverdue = !t.done && t.deadline && new Date(t.deadline) < now;
-  const priColors = {High:['rgba(181,56,74,0.1)','var(--red)'],Medium:['rgba(200,134,10,0.1)','var(--accent)'],Low:['rgba(45,106,79,0.1)','var(--green)']};
+  const priColors = {High:['rgba(255,91,110,0.12)','var(--red)'],Medium:['rgba(255,159,67,0.12)','var(--orange)'],Low:['rgba(61,255,160,0.12)','var(--green)']};
   const [priBase,priText] = priColors[t.priority]||priColors.Medium;
   const dateStr = t.deadline ? new Date(t.deadline+' 00:00').toLocaleDateString('en-IN',{month:'short',day:'numeric'}) : 'No deadline';
-  return `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0;cursor:pointer;transition:all 0.2s;overflow:hidden;margin-bottom:8px;" onclick="openTaskModal('${t.id}')">
-    <div style="height:3px;width:100%;background:${t.done?'var(--bg3)':priText}"></div>
+  return `<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0;cursor:pointer;transition:all 0.2s;overflow:hidden;margin-bottom:8px;" onclick="openTaskModal('${t.id}')">
+    <div style="height:2.5px;width:100%;background:${t.done?'rgba(255,255,255,0.06)':priText}"></div>
     <div style="padding:10px 12px 10px">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px">
         <div style="font-size:13px;font-weight:700;line-height:1.3;flex:1;${t.done?'text-decoration:line-through;color:var(--text3)':''}">${t.name}</div>
@@ -2126,8 +2102,8 @@ function renderTaskItem(t) {
       <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap">
         <div style="display:flex;gap:4px;flex-wrap:wrap">
           ${!t.done?`<span style="font-size:10px;padding:2px 7px;border-radius:5px;font-weight:700;background:${priBase};color:${priText}">${t.priority}</span>`:''}
-          <span style="font-size:10px;padding:2px 7px;border-radius:5px;font-weight:700;background:var(--bg2);color:var(--text2)">${t.type||'Task'}</span>
-          ${t.link?`<span style="font-size:10px;padding:2px 7px;border-radius:5px;background:rgba(45,106,79,0.08);color:var(--accent2)">🔗</span>`:''}
+          <span style="font-size:10px;padding:2px 7px;border-radius:5px;font-weight:700;background:rgba(255,255,255,0.07);color:var(--text2)">${t.type||'Task'}</span>
+          ${t.link?`<span style="font-size:10px;padding:2px 7px;border-radius:5px;background:rgba(91,141,248,0.1);color:var(--accent2)">🔗</span>`:''}
         </div>
         <div style="display:flex;align-items:center;gap:5px">
           <span style="font-size:10px;color:var(--text3)">${dateStr}</span>
@@ -2154,9 +2130,9 @@ function renderExamCard(e) {
   const coverVal = e.coverValue||'dots';
   let coverInner = '';
   if(coverType==='pattern') {
-    const pat = getCoverPatterns().find(p=>p.id===coverVal)||getCoverPatterns()[0];
+    const pat = getCoverPatterns(e.id).find(p=>p.id===coverVal)||getCoverPatterns(e.id)[0];
     coverInner = `<div style="position:absolute;inset:0;background:${grad}"></div>
-      <div style="position:absolute;inset:0;opacity:0.35">${pat.svg}</div>
+      <div style="position:absolute;inset:0;opacity:0.55">${pat.svg}</div>
       <div style="position:absolute;bottom:8px;left:12px;font-size:1.8rem">${examStatusEmoji(e.status)}</div>
       <div class="cc-status-badge ${statusClass(e.status)}" style="position:absolute;top:8px;right:10px">${e.status}</div>
       ${e.year?`<div style="position:absolute;top:8px;left:12px;font-size:11px;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:1px">${e.year}</div>`:''}`;
@@ -2166,8 +2142,8 @@ function renderExamCard(e) {
       <div class="cc-status-badge ${statusClass(e.status)}" style="position:absolute;top:8px;right:10px">${e.status}</div>
       ${e.year?`<div style="position:absolute;top:8px;left:12px;font-size:11px;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:1px">${e.year}</div>`:''}`;
   }
-  return `<div class="exam-card" onclick="openExamModal('${e.id}')" class="exam-card" style="display:flex;flex-direction:column">
-    <div style="height:90px;position:relative;overflow:hidden">${coverInner}</div>
+  return `<div class="exam-card" onclick="openExamModal('${e.id}')" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all 0.3s;margin-bottom:14px;display:flex;flex-direction:column">
+    <div style="height:95px;position:relative;overflow:hidden">${coverInner}</div>
     <div style="padding:14px 16px;flex:1;display:flex;flex-direction:column">
       <div style="font-family:var(--font-head);font-size:16px;font-weight:700;margin-bottom:4px">${e.name}</div>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
@@ -2189,11 +2165,11 @@ function refreshCourses() {
   if(courseFilter!=='all') filtered = filtered.filter(c=>c.status.toLowerCase().replace(/ /g,'-')===courseFilter);
   if(courseView==='grid') {
     grid.className='courses-grid';
-    grid.style.cssText='display:grid;grid-template-columns:1fr;gap:12px;';
+    grid.style.cssText='display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;';
     grid.innerHTML = filtered.length ? filtered.map(c=>renderCourseCard(c,false)).join('') : '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">📚</div><div class="empty-text">No courses yet. Tap ＋ to add one!</div></div>';
   } else {
     grid.className='';
-    grid.style.cssText='display:flex;flex-direction:column;gap:8px;';
+    grid.style.cssText='display:flex;flex-direction:column;gap:0;';
     grid.innerHTML = filtered.length ? filtered.map(c=>renderCourseCard(c,false)).join('') : '<div class="empty-state"><div class="empty-icon">📚</div><div class="empty-text">No courses yet. Tap ＋ to add one!</div></div>';
   }
 }
@@ -2240,7 +2216,7 @@ function refreshExams() {
   let filtered = DB.exams;
   if(examFilter!=='all') filtered = filtered.filter(e=>e.status.toLowerCase().replace(/ /g,'-')===examFilter);
   if(examView==='grid') {
-    list.style.cssText='display:grid;grid-template-columns:1fr;gap:12px;';
+    list.style.cssText='display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;';
     list.innerHTML = filtered.length ? filtered.map(e=>renderExamCard(e)).join('') : '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🏆</div><div class="empty-text">No exams yet. Tap ＋ to schedule one!</div></div>';
   } else {
     list.style.cssText='display:flex;flex-direction:column;gap:0;';
@@ -2278,8 +2254,7 @@ function updateExamFlashBar() {
     .sort((a,b) => a.days - b.days);
 
   if(!upcoming.length) {
-    bar.style.display = 'block';
-    textEl.innerHTML = `<span class="flash-dot"></span>&nbsp;📭 No Upcoming Exams&nbsp;<span class="flash-dot"></span>`;
+    bar.style.display = 'none';
     return;
   }
 
@@ -2291,8 +2266,14 @@ function updateExamFlashBar() {
 
   function showFlash() {
     const e = _flashExams[_flashIndex % _flashExams.length];
-    const dStr = e.days === 0 ? '🔥 TODAY!' : `⏳ ${e.days}d left`;
-    textEl.innerHTML = `<span class="flash-dot"></span>&nbsp;🎯 <strong>${e.name}</strong> — ${dStr}&nbsp;<span class="flash-dot"></span>`;
+    const dEl = document.getElementById('exam-flash-days');
+    if(e.days === 0) {
+      textEl.textContent = e.name;
+      if(dEl) dEl.textContent = '🔥 TODAY';
+    } else {
+      textEl.textContent = e.name;
+      if(dEl) dEl.textContent = e.days + 'd left';
+    }
     _flashIndex++;
   }
   showFlash();
@@ -2309,7 +2290,13 @@ function refreshAnalytics() {
   document.getElementById('a-rate').textContent=total?Math.round(done/total*100)+'%':'0%';
   const bars=document.getElementById('analytics-course-bars');
   if(DB.courses.length===0){bars.innerHTML='<div class="empty-state" style="padding:20px 0"><div class="empty-text">No courses yet</div></div>';}
-  else{bars.innerHTML=DB.courses.map(c=>{const t=DB.tasks.filter(x=>x.courseId===c.id);const d=t.filter(x=>x.done).length;const pct=t.length?Math.round(d/t.length*100):0;return`<div class="bar-row"><div class="bar-label">${c.name.slice(0,12)}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${c.color||'var(--accent)'}"></div></div><div class="bar-val">${pct}%</div></div>`;}).join('');}
+  else{
+    let showAll_bars = bars.dataset.expanded === '1';
+    const courses_to_show = showAll_bars ? DB.courses : DB.courses.slice(-3).reverse();
+    const barHtml = courses_to_show.map(c=>{const t=DB.tasks.filter(x=>x.courseId===c.id);const d=t.filter(x=>x.done).length;const pct=t.length?Math.round(d/t.length*100):0;return`<div class="bar-row"><div class="bar-label" title="${c.name}">${c.name.slice(0,10)}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${c.color||'var(--accent)'}"></div></div><div class="bar-val">${pct}%</div></div>`;}).join('');
+    const moreBtn = DB.courses.length > 3 ? `<div onclick="toggleAnalyticsBars()" style="text-align:center;margin-top:10px;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;padding:6px;">${showAll_bars ? '▲ Show Less' : '▼ More (' + (DB.courses.length - 3) + ' more)'}</div>` : '';
+    bars.innerHTML = barHtml + moreBtn;
+  }
   const high=DB.tasks.filter(t=>t.priority==='High').length;
   const med=DB.tasks.filter(t=>t.priority==='Medium').length;
   const low=DB.tasks.filter(t=>t.priority==='Low').length;
@@ -2320,7 +2307,14 @@ function refreshAnalytics() {
   cal.innerHTML=calDays.map(d=>{const active=DB.activityDays&&DB.activityDays.includes(d);const isToday=d===now.toISOString().slice(0,10);return`<div class="cal-day ${active?'active-day':''} ${isToday?'today':''}" title="${d}"></div>`;}).join('');
   const abars=document.getElementById('analytics-assign-bars');
   if(DB.courses.length===0){abars.innerHTML='<div class="empty-state" style="padding:20px 0"><div class="empty-text">No courses yet</div></div>';}
-  else{abars.innerHTML=DB.courses.map(c=>{const t=DB.tasks.filter(x=>x.courseId===c.id).length;const mx=Math.max(...DB.courses.map(cc=>DB.tasks.filter(x=>x.courseId===cc.id).length),1);return`<div class="bar-row"><div class="bar-label">${c.name.slice(0,12)}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(t/mx*100)}%;background:${c.color||'var(--accent2)'}"></div></div><div class="bar-val">${t}</div></div>`;}).join('');}
+  else{
+    const mx=Math.max(...DB.courses.map(cc=>DB.tasks.filter(x=>x.courseId===cc.id).length),1);
+    const showAll_abars = abars.dataset.expanded === '1';
+    const courses_a = showAll_abars ? DB.courses : DB.courses.slice(-3).reverse();
+    const abarHtml = courses_a.map(c=>{const t=DB.tasks.filter(x=>x.courseId===c.id).length;return`<div class="bar-row"><div class="bar-label" title="${c.name}">${c.name.slice(0,10)}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(t/mx*100)}%;background:${c.color||'var(--accent2)'};"></div></div><div class="bar-val">${t}</div></div>`;}).join('');
+    const moreBtn2 = DB.courses.length > 3 ? `<div onclick="toggleAnalyticsAssign()" style="text-align:center;margin-top:10px;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;padding:6px;">${showAll_abars ? '▲ Show Less' : '▼ More (' + (DB.courses.length - 3) + ' more)'}</div>` : '';
+    abars.innerHTML = abarHtml + moreBtn2;
+  }
   renderAchievements();
 }
 
@@ -2331,7 +2325,7 @@ function renderDonut(data) {
   let offset=25,r=35,cx=50,cy=50,sw=20;
   let paths='';
   data.forEach(d=>{const pct=d.val/total;const dash=2*Math.PI*r*pct;const gap=2*Math.PI*r-dash;const dashOffset=-(offset/100)*2*Math.PI*r;paths+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${d.color}" stroke-width="${sw}" stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${dashOffset}" transform="rotate(-90 ${cx} ${cy})"/>`;offset+=pct*100;});
-  svg.innerHTML=`${paths}<text x="50" y="46" text-anchor="middle" fill="var(--text)" font-family="Instrument Serif,serif" font-size="14" font-weight="800">${total}</text><text x="50" y="58" text-anchor="middle" fill="var(--text3)" font-family="DM Sans,sans-serif" font-size="8">tasks</text>`;
+  svg.innerHTML=`${paths}<text x="50" y="46" text-anchor="middle" fill="var(--text)" font-family="Syne,sans-serif" font-size="14" font-weight="800">${total}</text><text x="50" y="58" text-anchor="middle" fill="var(--text3)" font-family="DM Sans,sans-serif" font-size="8">tasks</text>`;
   legend.innerHTML=data.map(d=>`<div class="legend-item"><div class="legend-dot" style="background:${d.color}"></div>${d.label}: ${d.val}</div>`).join('');
 }
 
@@ -2575,10 +2569,17 @@ function openExamModal(id) {
   buildSwatches('em-color-swatches');
   renderExamCoverPickers('em-pattern-group-btns');
   const list = document.getElementById('em-course-list');
-  list.innerHTML = DB.courses.map(c=>`<div class="course-check-item" id="eck-${c.id}" onclick="toggleExamCourse('${c.id}')">
-    <div class="course-check-icon" id="ecc-${c.id}"></div>
-    <span style="font-size:13px;font-weight:500">${c.name}</span>
-  </div>`).join('') || '<div style="font-size:12px;color:var(--text3)">No courses yet</div>';
+  list.innerHTML = DB.courses.length
+    ? DB.courses.map(c=>`<div class="course-dropdown-item" id="eck-${c.id}" onclick="toggleExamCourse('${c.id}')">
+        <div class="course-dropdown-check" id="ecc-${c.id}"></div>
+        <span>${c.name}</span>
+        <span style="margin-left:auto;width:10px;height:10px;border-radius:50%;background:${c.color||'var(--accent)'};flex-shrink:0"></span>
+      </div>`).join('')
+    : '<div style="padding:12px 14px;font-size:12px;color:var(--text3)">No courses added yet</div>';
+  document.getElementById('em-course-trigger-label').textContent = 'Select courses to link';
+  document.getElementById('em-dropdown-arrow').classList.remove('open');
+  list.style.display = 'none';
+  document.getElementById('em-selected-chips').innerHTML = '';
   const delBtn = document.getElementById('em-delete-btn');
   const titleEl = document.getElementById('exam-modal-title');
   if(id) {
@@ -2618,16 +2619,41 @@ function toggleExamCourse(id, forceOn) {
   const item = document.getElementById('eck-'+id);
   const icon = document.getElementById('ecc-'+id);
   if(!item) return;
-  if(forceOn){item.classList.add('selected');icon.textContent='✓';return;}
+  if(forceOn){ item.classList.add('selected'); icon.textContent='✓'; updateLinkedChips(); return; }
   item.classList.toggle('selected');
-  icon.textContent=item.classList.contains('selected')?'✓':'';
+  icon.textContent = item.classList.contains('selected') ? '✓' : '';
+  updateLinkedChips();
+}
+function updateLinkedChips() {
+  const selected = Array.from(document.querySelectorAll('.course-dropdown-item.selected'));
+  const chips = document.getElementById('em-selected-chips');
+  const trigger = document.getElementById('em-course-trigger-label');
+  if(!chips || !trigger) return;
+  if(selected.length === 0) {
+    chips.innerHTML = '';
+    trigger.textContent = 'Select courses to link';
+  } else {
+    trigger.textContent = selected.length + ' course' + (selected.length>1?'s':'') + ' selected';
+    chips.innerHTML = selected.map(el=>{
+      const id = el.id.replace('eck-','');
+      const c = DB.courses.find(x=>x.id===id);
+      return c ? `<span class="linked-chip" style="border-color:${c.color||'var(--accent)'}30;background:${c.color||'var(--accent)'}15;color:${c.color||'var(--accent)'}">● ${c.name}</span>` : '';
+    }).join('');
+  }
+}
+function toggleCourseDropdown() {
+  const list = document.getElementById('em-course-list');
+  const arrow = document.getElementById('em-dropdown-arrow');
+  const isOpen = list.style.display !== 'none';
+  list.style.display = isOpen ? 'none' : 'block';
+  if(arrow) arrow.classList.toggle('open', !isOpen);
 }
 
 function saveExam() {
   haptic('medium');
   const name = document.getElementById('em-name').value.trim();
   if(!name){showToast('⚠️','Exam name required');return;}
-  const linked = Array.from(document.querySelectorAll('.course-check-item.selected')).map(el=>el.id.replace('eck-',''));
+  const linked = Array.from(document.querySelectorAll('.course-dropdown-item.selected')).map(el=>el.id.replace('eck-',''));
   const examCoverType = getSegVal('em-pattern-group')||'pattern';
   const examCoverVal = document.querySelector('#em-pattern-group-btns .pattern-btn.selected')?.dataset.id||'dots';
   const data = {
@@ -2697,6 +2723,16 @@ function saveGoal() {
 }
 
 // ---- FILTER / VIEW ----
+function toggleAnalyticsBars() {
+  const bars = document.getElementById('analytics-course-bars');
+  bars.dataset.expanded = bars.dataset.expanded === '1' ? '0' : '1';
+  refreshAnalytics();
+}
+function toggleAnalyticsAssign() {
+  const abars = document.getElementById('analytics-assign-bars');
+  abars.dataset.expanded = abars.dataset.expanded === '1' ? '0' : '1';
+  refreshAnalytics();
+}
 function filterCourses(f,el){haptic();courseFilter=f;document.querySelectorAll('#courses-list-view .filter-tabs .filter-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');refreshCourses();}
 function filterTasks(f,el){haptic();taskFilter=f;document.querySelectorAll('#course-detail-view .filter-tabs .filter-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');refreshCourseDetail();}
 function filterExams(f,el){haptic();examFilter=f;document.querySelectorAll('#page-exams .filter-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');refreshExams();}
@@ -2731,6 +2767,8 @@ function toggleTheme(){
   haptic();
   DB.theme = DB.theme==='light'?'dark':'light';
   applyTheme(DB.theme); save(); refreshSettings();
+  // Re-render cards so patterns update for new theme
+  refreshHome(); refreshCourses(); refreshExams();
 }
 function applyTheme(t) {
   document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : '');
@@ -2792,16 +2830,16 @@ function selectEmoji(el){haptic();document.querySelectorAll('.emoji-opt').forEac
 function renderCoverPickers(containerId) {
   const container = document.getElementById(containerId);
   if(!container) return;
-  const pats = getCoverPatterns();
-  container.innerHTML = pats.map(p=>`<div class="pattern-btn ${p.id===selectedCourseCoverValue?'selected':''}" data-id="${p.id}" onclick="selectPatternBtn('${containerId}','${p.id}',this)" title="${p.id}" style="width:52px;height:36px;overflow:hidden;border-radius:8px;border:2px solid var(--border);background:rgba(255,255,255,0.05);cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;justify-content:center">${p.svg}</div>`).join('');
+  const pats = getCoverPatterns('picker_c');
+  container.innerHTML = pats.map(p=>`<div class="pattern-btn ${p.id===selectedCourseCoverValue?'selected':''}" data-id="${p.id}" onclick="selectPatternBtn('${containerId}','${p.id}',this)" title="${p.id}" style="width:52px;height:36px;overflow:hidden;border-radius:8px;border:2px solid var(--border);background:var(--bg2);cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;justify-content:center">${p.svg}</div>`).join('');
 }
 
 function renderExamCoverPickers(containerId) {
   const container = document.getElementById(containerId);
   if(!container) return;
-  const pats = getCoverPatterns();
+  const pats = getCoverPatterns('picker_e');
   const current = editingExamId ? (DB.exams.find(e=>e.id===editingExamId)?.coverValue||'dots') : 'dots';
-  container.innerHTML = pats.map(p=>`<div class="pattern-btn ${p.id===current?'selected':''}" data-id="${p.id}" onclick="selectPatternBtn('${containerId}','${p.id}',this)" title="${p.id}" style="width:52px;height:36px;overflow:hidden;border-radius:8px;border:2px solid var(--border);background:rgba(255,255,255,0.05);cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;justify-content:center">${p.svg}</div>`).join('');
+  container.innerHTML = pats.map(p=>`<div class="pattern-btn ${p.id===current?'selected':''}" data-id="${p.id}" onclick="selectPatternBtn('${containerId}','${p.id}',this)" title="${p.id}" style="width:52px;height:36px;overflow:hidden;border-radius:8px;border:2px solid var(--border);background:var(--bg2);cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;justify-content:center">${p.svg}</div>`).join('');
 }
 
 function selectPatternBtn(containerId, patId, el) {
