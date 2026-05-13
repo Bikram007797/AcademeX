@@ -121,7 +121,7 @@ html, body {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
-#splash.hide { opacity: 0; transform: scale(0.97); pointer-events: none; }
+#splash.hide { opacity: 0; transform: scale(0.97); pointer-events: none; display: none; }
 
 .splash-logo {
   width: 96px; height: 96px; border-radius: 24px;
@@ -1840,6 +1840,7 @@ auth.onAuthStateChanged(async (user) => {
     buildSwatches('em-color-swatches');
     buildEmojiPicker();
     showApp();
+    document.getElementById('splash').classList.add('hide'); // ← ADD THIS LINE
   } else {
     currentUser = null;
     document.getElementById('main-app').classList.remove('show');
@@ -1847,9 +1848,9 @@ auth.onAuthStateChanged(async (user) => {
     document.getElementById('auth-screen').style.display = '';
     document.getElementById('auth-screen').classList.remove('hide');
     // Splash
-    setTimeout(() => {
-      document.getElementById('splash').classList.add('hide');
-    }, 2000);
+ setTimeout(() => {
+  document.getElementById('splash').classList.add('hide');
+}, 1500);
     buildSwatches('cm-color-swatches');
     buildSwatches('em-color-swatches');
     buildEmojiPicker();
@@ -1941,12 +1942,7 @@ async function doSignOut() {
 }
 
 // ---- INIT / SHOW APP ----
-window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    const splash = document.getElementById('splash');
-    if(splash) { splash.classList.add('hide'); }
-  }, 2000);
-});
+
 
 function showApp() {
   const app = document.getElementById('main-app');
