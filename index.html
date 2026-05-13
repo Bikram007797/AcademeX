@@ -12,39 +12,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" id="pwa-icon" href="icon.png">
 <title>AcademeX — Smart Study Hub</title>
-<script>
-// Generate crisp PWA home-screen icon via canvas (runs before body)
-document.addEventListener('DOMContentLoaded', function(){
-  try {
-    var c = document.createElement('canvas');
-    c.width = c.height = 180;
-    var ctx = c.getContext('2d');
-    var r = 40;
-    ctx.beginPath();
-    ctx.moveTo(r,0); ctx.lineTo(180-r,0);
-    ctx.quadraticCurveTo(180,0,180,r);
-    ctx.lineTo(180,180-r); ctx.quadraticCurveTo(180,180,180-r,180);
-    ctx.lineTo(r,180); ctx.quadraticCurveTo(0,180,0,180-r);
-    ctx.lineTo(0,r); ctx.quadraticCurveTo(0,0,r,0);
-    ctx.closePath();
-    var grad = ctx.createLinearGradient(0,0,180,180);
-    grad.addColorStop(0,'#2d2216'); grad.addColorStop(1,'#1a150f');
-    ctx.fillStyle = grad; ctx.fill();
-    ctx.beginPath(); ctx.arc(90,88,54,0,Math.PI*2);
-    ctx.strokeStyle='rgba(245,184,58,0.3)'; ctx.lineWidth=4; ctx.stroke();
-    ctx.font = '68px serif';
-    ctx.textAlign='center'; ctx.textBaseline='middle';
-    ctx.fillStyle='#f5b83a';
-    ctx.fillText('🔆', 90, 86);
-    ctx.font = '700 11px sans-serif';
-    ctx.fillStyle='rgba(245,184,58,0.65)';
-    ctx.letterSpacing='2px';
-    ctx.fillText('ACADEM·X', 90, 152);
-    var icon = document.getElementById('pwa-icon');
-    if(icon) icon.href = c.toDataURL('image/png');
-  } catch(e){}
-});
-</script>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -2144,17 +2112,20 @@ function renderCourseCard(c, compact) {
   const coverType = c.coverType || 'pattern';
   const coverVal = c.coverValue || 'dots';
   const emoji = statusEmoji(c.status);
+  const nameOverlay = `<div style="position:absolute;top:10px;left:12px;right:12px;font-family:var(--font-head);font-size:17px;font-weight:700;line-height:1.25;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.8),0 0 16px rgba(0,0,0,0.5);background:linear-gradient(90deg,rgba(0,0,0,0.4) 0%,transparent 100%);padding:4px 10px;border-radius:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.name}</div>`;
   let coverInner = '';
   if(coverType==='pattern') {
     const pat = getCoverPatterns(c.id).find(p=>p.id===coverVal)||getCoverPatterns(c.id)[0];
-    coverInner = `<div style="position:absolute;inset:0;background:${grad}"></div>
-      <div style="position:absolute;inset:0;opacity:0.85">${pat.svg}</div>
-      <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5))">${emoji}</div>
-      <div class="cc-status-badge ${statusClass(c.status)}">${c.status}</div>`;
+  coverInner = `<div style="position:absolute;inset:0;background:${grad}"></div>
+  <div style="position:absolute;inset:0;opacity:0.85">${pat.svg}</div>
+  <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5))">${emoji}</div>
+  <div class="cc-status-badge ${statusClass(c.status)}">${c.status}</div>
+  ${nameOverlay}`;
   } else {
     coverInner = `<div class="cc-cover-gradient" style="background:${grad}"></div>
-      <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5))">${emoji}</div>
-      <div class="cc-status-badge ${statusClass(c.status)}">${c.status}</div>`;
+  <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5))">${emoji}</div>
+  <div class="cc-status-badge ${statusClass(c.status)}">${c.status}</div>
+  ${nameOverlay}`;
   }
   const linkedExam = DB.exams.find(e=>e.linkedCourses&&e.linkedCourses.includes(c.id));
   const examTag = linkedExam ? `<div class="cc-exam-tag">🏆 ${linkedExam.name}</div>` : '';
@@ -2162,8 +2133,8 @@ function renderCourseCard(c, compact) {
   const priorityLabel = c.priority||'Medium';
   return `<div class="course-card" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all 0.3s;margin-bottom:14px;">
     <div class="course-cover" style="height:115px;position:relative;overflow:hidden;" onclick="openCourseDetail('${c.id}')">${coverInner}</div>
-    <div class="course-body" onclick="openCourseDetail('${c.id}')">
-      <div class="course-name" style="font-family:var(--font-head);font-size:16px;font-weight:400;margin-bottom:8px;line-height:1.3">${c.name}</div>
+  <div class="course-body" onclick="openCourseDetail('${c.id}')" style="padding:12px 14px 10px;">
+     
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
         <span style="font-size:12px;font-weight:700;padding:3px 10px;border-radius:6px;background:${statusCls_bg(c.status)};color:${statusCls_col(c.status)}">${c.status}</span>
         ${c.date?`<span style="font-size:12px;font-weight:700;padding:3px 10px;border-radius:6px;background:rgba(200,134,10,0.12);color:var(--accent)">📅 ${formatDate(c.date)}</span>`:''}
@@ -2232,14 +2203,17 @@ function renderExamCard(e) {
   if(coverType==='pattern') {
     const pat = getCoverPatterns(e.id).find(p=>p.id===coverVal)||getCoverPatterns(e.id)[0];
     coverInner = `<div style="position:absolute;inset:0;background:${grad}"></div>
-      <div style="position:absolute;inset:0;opacity:0.85">${pat.svg}</div>
-      <div style="position:absolute;bottom:8px;left:12px;font-size:1.8rem">${examStatusEmoji(e.status)}</div>
-      <div class="cc-status-badge ${statusClass(e.status)}" style="position:absolute;top:8px;right:10px">${e.status}</div>
+     coverInner = `<div style="position:absolute;inset:0;background:${grad}"></div>
+  <div style="position:absolute;inset:0;opacity:0.85">${pat.svg}</div>
+  <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5))">${emoji}</div>
+  <div class="cc-status-badge ${statusClass(c.status)}">${c.status}</div>
+  ${nameOverlay}`;
       ${e.year?`<div style="position:absolute;top:8px;left:12px;font-size:11px;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:1px">${e.year}</div>`:''}`;
   } else {
-    coverInner = `<div style="position:absolute;inset:0;background:${grad}"></div>
-      <div style="position:absolute;bottom:8px;left:12px;font-size:1.8rem">${examStatusEmoji(e.status)}</div>
-      <div class="cc-status-badge ${statusClass(e.status)}" style="position:absolute;top:8px;right:10px">${e.status}</div>
+   coverInner = `<div class="cc-cover-gradient" style="background:${grad}"></div>
+  <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5))">${emoji}</div>
+  <div class="cc-status-badge ${statusClass(c.status)}">${c.status}</div>
+  ${nameOverlay}`;
       ${e.year?`<div style="position:absolute;top:8px;left:12px;font-size:11px;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:1px">${e.year}</div>`:''}`;
   }
   return `<div class="exam-card" onclick="openExamModal('${e.id}')" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all 0.3s;margin-bottom:14px;display:flex;flex-direction:column">
