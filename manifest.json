@@ -9,7 +9,7 @@
   "theme_color": "#7c5cfc",
   "icons": [
   { "src": "icon.png", "sizes": "any", "type": "image/png" },
-{ "src": "icon.png", "sizes": "512x512", "type": "image/png" }
+  { "src": "icon.png", "sizes": "512x512", "type": "image/png" }
   ],
   "categories": ["education", "productivity"],
   "screenshots": []
