@@ -575,29 +575,70 @@ html, body {
 /* ===== ANALYTICS ===== */
 .analytics-card {
   background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 20px; margin-bottom: 16px;
+  border-radius: var(--radius); padding: 16px; margin-bottom: 14px;
   box-shadow: var(--shadow);
 }
 .analytics-title {
-  font-family: var(--font-head); font-size: 0.95rem; font-weight: 400;
-  margin-bottom: 16px; display: flex; align-items: center; gap: 8px; color: var(--text);
+  font-family: var(--font-head); font-size: 0.9rem; font-weight: 400;
+  margin-bottom: 14px; display: flex; align-items: center; gap: 6px; color: var(--text);
 }
 
-.bar-label { font-size: 12px; color: var(--text2); width: 80px; font-family: var(--font-mono); }
-.bar-track { flex: 1; height: 8px; background: var(--bg3); border-radius: 99px; overflow: hidden; }
-.bar-fill  { height: 100%; border-radius: 99px; transition: width 1s ease; }
-.bar-val   { font-size: 11px; color: var(--text3); font-family: var(--font-mono); }
+/* Quick stats row — 3 equal columns */
+.stats-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+}
+.stat-mini {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px 8px; text-align: center;
+  box-shadow: var(--shadow);
+}
+.stat-mini-num   { font-family: var(--font-head); font-size: 1.5rem; font-weight: 400; color: var(--accent); line-height: 1; }
+.stat-mini-label { font-size: 10px; color: var(--text3); font-family: var(--font-mono); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
 
-.stat-mini       { background: var(--bg2); border-radius: var(--radius-sm); padding: 14px 10px; text-align: center; }
-.stat-mini-num   { font-family: var(--font-head); font-size: 1.4rem; font-weight: 400; color: var(--accent); }
-.stat-mini-label { font-size: 11px; color: var(--text3); font-family: var(--font-mono); margin-top: 2px; }
+/* Bar chart rows */
+.bar-row   { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.bar-row:last-child { margin-bottom: 0; }
+.bar-label { font-size: 11px; color: var(--text2); width: 72px; flex-shrink: 0; font-family: var(--font-mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar-track { flex: 1; height: 7px; background: var(--bg3); border-radius: 99px; overflow: hidden; }
+.bar-fill  { height: 100%; border-radius: 99px; transition: width 1s ease; min-width: 2px; }
+.bar-val   { font-size: 11px; color: var(--text3); font-family: var(--font-mono); width: 32px; text-align: right; flex-shrink: 0; }
 
-/* Activity heatmap */
-.cal-day            { height: 14px; border-radius: 3px; background: var(--bg3); transition: all 0.2s; }
-.cal-day.active-day { background: rgba(45,106,79,0.55); }
+/* Donut chart — side by side on mobile */
+.donut-wrap {
+  display: flex; align-items: center; gap: 16px;
+}
+.donut-svg {
+  width: 130px; height: 130px; flex-shrink: 0;
+}
+.donut-legend {
+  flex: 1; display: flex; flex-direction: column; gap: 8px;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--text2);
+}
+.legend-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+
+/* Activity heatmap — proper grid */
+.mini-calendar {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+}
+.cal-day {
+  aspect-ratio: 1; border-radius: 3px;
+  background: var(--bg3); transition: all 0.2s;
+}
+.cal-day.active-day { background: rgba(45,106,79,0.6); }
 .cal-day.today      { background: var(--accent); }
 
 /* ===== ACHIEVEMENTS ===== */
+.achievements-section { margin-bottom: 20px; }
+.achievement-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
 .achievement-card {
   background: var(--surface2); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 16px; text-align: center;
@@ -2399,11 +2440,11 @@ function renderDonut(data) {
   const total=data.reduce((s,d)=>s+d.val,0)||1;
   const svg=document.getElementById('donut-svg');
   const legend=document.getElementById('donut-legend');
-  let offset=25,r=35,cx=50,cy=50,sw=20;
+  let offset=25,r=35,cx=50,cy=50,sw=18;
   let paths='';
   data.forEach(d=>{const pct=d.val/total;const dash=2*Math.PI*r*pct;const gap=2*Math.PI*r-dash;const dashOffset=-(offset/100)*2*Math.PI*r;paths+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${d.color}" stroke-width="${sw}" stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${dashOffset}" transform="rotate(-90 ${cx} ${cy})"/>`;offset+=pct*100;});
-  svg.innerHTML=`${paths}<text x="50" y="46" text-anchor="middle" fill="var(--text)" font-family="Syne,sans-serif" font-size="14" font-weight="800">${total}</text><text x="50" y="58" text-anchor="middle" fill="var(--text3)" font-family="DM Sans,sans-serif" font-size="8">tasks</text>`;
-  legend.innerHTML=data.map(d=>`<div class="legend-item"><div class="legend-dot" style="background:${d.color}"></div>${d.label}: ${d.val}</div>`).join('');
+  svg.innerHTML=`${paths}<text x="50" y="46" text-anchor="middle" fill="var(--text)" font-family="Georgia,serif" font-size="15" font-weight="700">${total}</text><text x="50" y="59" text-anchor="middle" fill="var(--text3)" font-family="sans-serif" font-size="8">tasks</text>`;
+  legend.innerHTML=data.map(d=>`<div class="legend-item"><div class="legend-dot" style="background:${d.color}"></div><span>${d.label}: <strong>${d.val}</strong></span></div>`).join('');
 }
 
 // ---- SETTINGS ----
