@@ -641,19 +641,57 @@ html, body {
 }
 .achievement-card {
   background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 16px; text-align: center;
-  transition: all 0.2s; position: relative; overflow: hidden; box-shadow: var(--shadow);
+  border-radius: var(--radius); padding: 14px 10px; text-align: center;
+  transition: all 0.2s; position: relative; overflow: hidden;
+  box-shadow: var(--shadow);
 }
-.achievement-card.earned {
-  background: linear-gradient(135deg, rgba(245,184,58,0.1), rgba(200,134,10,0.08));
-  border-color: rgba(245,184,58,0.3);
+/* LOCKED */
+.achievement-card.locked { opacity: 0.72; }
+.achievement-card.locked .achievement-icon { filter: grayscale(1); opacity: 0.25; }
+.achievement-card.locked .achievement-name { color: var(--text3); }
+.achievement-hint {
+  font-size: 10px; color: var(--text3); margin-top: 4px;
+  font-style: italic; line-height: 1.3;
 }
-.achievement-icon { font-size: 34px; margin-bottom: 8px; filter: grayscale(1); opacity: 0.3; transition: all 0.3s; }
-.achievement-card.earned .achievement-icon { filter: none; opacity: 1; }
-.achievement-name { font-family: var(--font-head); font-size: 13px; font-weight: 400; margin-bottom: 4px; color: var(--text); }
-.achievement-desc { font-size: 11px; color: var(--text3); }
+
+/* EARNED tiers */
+.achievement-card.earned { border-color: rgba(245,184,58,0.35); }
+.achievement-card.tier-bronze.earned  { background: linear-gradient(135deg,rgba(205,127,50,0.12),rgba(205,127,50,0.04)); border-color:rgba(205,127,50,0.4); }
+.achievement-card.tier-silver.earned  { background: linear-gradient(135deg,rgba(180,180,180,0.15),rgba(180,180,180,0.05)); border-color:rgba(160,160,160,0.5); }
+.achievement-card.tier-gold.earned    { background: linear-gradient(135deg,rgba(245,184,58,0.18),rgba(245,184,58,0.06)); border-color:rgba(245,184,58,0.45); }
+.achievement-card.tier-platinum.earned{ background: linear-gradient(135deg,rgba(100,200,255,0.15),rgba(100,200,255,0.05)); border-color:rgba(100,200,255,0.4); }
+.achievement-card.tier-legendary.earned{background: linear-gradient(135deg,rgba(200,80,255,0.18),rgba(255,140,0,0.1)); border-color:rgba(200,80,255,0.45); }
+.achievement-card.tier-secret.earned  { background: linear-gradient(135deg,rgba(60,220,120,0.15),rgba(60,220,120,0.05)); border-color:rgba(60,220,120,0.4); }
+
+.achievement-icon { font-size: 30px; margin-bottom: 6px; transition: all 0.3s; display: block; }
+.achievement-name { font-family: var(--font-head); font-size: 12px; font-weight: 400; margin-bottom: 3px; color: var(--text); line-height: 1.2; }
+.achievement-desc { font-size: 10px; color: var(--text3); line-height: 1.3; }
 .achievement-card.earned .achievement-name { color: var(--accent); }
-.achievement-badge { background: var(--accent); color: white; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 99px; }
+.achievement-card.earned .achievement-icon { filter: none; opacity: 1; }
+
+/* Tier badge pill */
+.tier-badge {
+  display: inline-block; font-size: 8px; font-weight: 800; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 2px 6px; border-radius: 99px;
+  margin-bottom: 6px;
+}
+.tier-badge.bronze   { background:rgba(205,127,50,0.2);  color:#cd7f32; }
+.tier-badge.silver   { background:rgba(160,160,160,0.2); color:#aaa; }
+.tier-badge.gold     { background:rgba(245,184,58,0.2);  color:#c88600; }
+.tier-badge.platinum { background:rgba(100,200,255,0.2); color:#4ac8f0; }
+.tier-badge.legendary{ background:rgba(200,80,255,0.18); color:#c050ff; }
+.tier-badge.secret   { background:rgba(60,220,120,0.2);  color:#2da865; }
+
+/* Achievement filters */
+.achieve-filters {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;
+}
+.achieve-filter {
+  font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 99px;
+  border: 1px solid var(--border); background: var(--surface2); color: var(--text2);
+  cursor: pointer; transition: all 0.15s; white-space: nowrap;
+}
+.achieve-filter.active { background: var(--accent); border-color: var(--accent); color: white; }
 
 /* ===== SETTINGS PAGE ===== */
 .settings-section { margin-bottom: 24px; }
@@ -1345,7 +1383,17 @@ html, body {
       <div class="achievements-section">
         <div class="sec-header">
           <div class="sec-title">🏆 Achievements</div>
-          <div class="chip" id="achieve-count">0 / 8</div>
+          <div class="chip" id="achieve-count">0 / 0</div>
+        </div>
+        <div class="achieve-filters">
+          <div class="achieve-filter active" onclick="filterAchievements('all',this)">All</div>
+          <div class="achieve-filter" onclick="filterAchievements('earned',this)">Earned</div>
+          <div class="achieve-filter" onclick="filterAchievements('bronze',this)">🥉 Bronze</div>
+          <div class="achieve-filter" onclick="filterAchievements('silver',this)">🥈 Silver</div>
+          <div class="achieve-filter" onclick="filterAchievements('gold',this)">🥇 Gold</div>
+          <div class="achieve-filter" onclick="filterAchievements('platinum',this)">💎 Platinum</div>
+          <div class="achieve-filter" onclick="filterAchievements('legendary',this)">👑 Legendary</div>
+          <div class="achieve-filter" onclick="filterAchievements('secret',this)">🔐 Secret</div>
         </div>
         <div class="achievement-grid" id="achievements-grid"></div>
       </div>
@@ -1463,7 +1511,7 @@ html, body {
 <!-- Achievement Popup -->
 <div class="achievement-popup" id="achieve-popup">
   <div class="achieve-icon" id="achieve-popup-icon">🏆</div>
-  <div class="achieve-title">ACHIEVEMENT UNLOCKED</div>
+  <div class="achieve-title" id="achieve-popup-title">ACHIEVEMENT UNLOCKED</div>
   <div class="achieve-name" id="achieve-popup-name">—</div>
 </div>
 
@@ -1732,15 +1780,110 @@ let _saveTimeout = null;
 const COLORS = ['#7c5cfc','#5b8df8','#f85b9a','#3dffa0','#f5c842','#ff9f43','#ff5b6e','#00d2d3','#7c3aed','#06b6d4'];
 const STATUS_EMOJI = {'Not Started':'📘','In Progress':'⚡','Complete':'✅','Paused':'⏸️'};
 const PROFILE_EMOJIS = ['🎓','😊','🧠','📖','🚀','😎','🦊','🐼','🦁','🌟','🎯','💡','🔥','⚡','🌈','🏆','✏️','🎖','💎','🧩'];
+// ---- ACHIEVEMENT HELPERS ----
+function _done(d){ return d.tasks.filter(t=>t.done).length; }
+function _streak(d){
+  if(!d.activityDays||!d.activityDays.length) return 0;
+  const today=new Date(); let streak=0;
+  for(let i=0;i<3650;i++){
+    const s=new Date(today); s.setDate(s.getDate()-i);
+    const key=s.toISOString().slice(0,10);
+    if(d.activityDays.includes(key)) streak++;
+    else if(i>0) break;
+  }
+  return streak;
+}
+function _daysActive(d){ return (d.activityDays||[]).length; }
+function _highDone(d){ return d.tasks.filter(t=>t.done&&t.priority==='High').length; }
+function _hour(){ return new Date().getHours(); }
+function _month(){ return new Date().getMonth(); } // 0=Jan
+
 const ACHIEVEMENTS = [
-  {id:'first_course',icon:'🌱',name:'First Step',desc:'Add your first course',check:d=>d.courses.length>=1},
-  {id:'five_courses',icon:'📚',name:'Scholar',desc:'Add 5 courses',check:d=>d.courses.length>=5},
-  {id:'first_task',icon:'✏️',name:'Task Master',desc:'Create your first task',check:d=>d.tasks.length>=1},
-  {id:'ten_done',icon:'🏅',name:'Achiever',desc:'Complete 10 tasks',check:d=>d.tasks.filter(t=>t.done).length>=10},
-  {id:'twenty_done',icon:'🏆',name:'Champion',desc:'Complete 20 tasks',check:d=>d.tasks.filter(t=>t.done).length>=20},
-  {id:'first_exam',icon:'📋',name:'Exam Ready',desc:'Add your first exam',check:d=>d.exams.length>=1},
-  {id:'streak',icon:'🔥',name:'On Fire',desc:'Have 3+ active courses',check:d=>d.courses.filter(c=>c.status==='In Progress').length>=3},
-  {id:'goal_setter',icon:'🎯',name:'Goal Setter',desc:'Set your weekly goal',check:d=>!!(d.goal&&d.goal.trim())},
+  // ══════════════════════════════════════════
+  // 🌱  TIER: COURSES  (Bronze→Legendary)
+  // ══════════════════════════════════════════
+  {id:'course_1',  tier:'bronze',   icon:'🌱', name:'First Step',      desc:'Add your first course',                hint:'Create your very first course to unlock.',        check:d=>d.courses.length>=1},
+  {id:'course_3',  tier:'silver',   icon:'📖', name:'Bookshelf',       desc:'Add 3 courses',                         hint:'Keep adding — reach 3 courses total.',            check:d=>d.courses.length>=3},
+  {id:'course_5',  tier:'gold',     icon:'📚', name:'Scholar',         desc:'Add 5 courses',                         hint:'Build your library to 5 courses.',                check:d=>d.courses.length>=5},
+  {id:'course_10', tier:'platinum', icon:'🎓', name:'Academic',        desc:'Add 10 courses',                        hint:'10 courses — a full curriculum awaits.',          check:d=>d.courses.length>=10},
+  {id:'course_20', tier:'legendary',icon:'👑', name:'Grandmaster',     desc:'Add 20 courses',                        hint:'Only legends maintain 20 courses.',               check:d=>d.courses.length>=20},
+
+  // ══════════════════════════════════════════
+  // ✅  TIER: TASKS CREATED
+  // ══════════════════════════════════════════
+  {id:'task_1',    tier:'bronze',   icon:'✏️', name:'First Task',      desc:'Create your first task',               hint:'Add any task to a course.',                       check:d=>d.tasks.length>=1},
+  {id:'task_10',   tier:'bronze',   icon:'📝', name:'Planner',         desc:'Create 10 tasks',                      hint:'Keep planning — hit 10 tasks created.',           check:d=>d.tasks.length>=10},
+  {id:'task_25',   tier:'silver',   icon:'📋', name:'Organiser',       desc:'Create 25 tasks',                      hint:'25 tasks planned — halfway to gold.',             check:d=>d.tasks.length>=25},
+  {id:'task_50',   tier:'gold',     icon:'📊', name:'Strategist',      desc:'Create 50 tasks',                      hint:'50 tasks — serious planning underway.',           check:d=>d.tasks.length>=50},
+  {id:'task_100',  tier:'platinum', icon:'🗂️', name:'Commander',       desc:'Create 100 tasks',                     hint:'100 tasks — you run a tight ship.',               check:d=>d.tasks.length>=100},
+  {id:'task_250',  tier:'legendary',icon:'⚡', name:'War Room',        desc:'Create 250 tasks',                     hint:'250 tasks — legendary planner.',                  check:d=>d.tasks.length>=250},
+
+  // ══════════════════════════════════════════
+  // 🏆  TIER: TASKS COMPLETED
+  // ══════════════════════════════════════════
+  {id:'done_1',    tier:'bronze',   icon:'✅', name:'Done & Dusted',   desc:'Complete your first task',             hint:'Mark any task as done.',                          check:d=>_done(d)>=1},
+  {id:'done_10',   tier:'bronze',   icon:'🏅', name:'Achiever',        desc:'Complete 10 tasks',                    hint:'Finish 10 tasks to unlock.',                      check:d=>_done(d)>=10},
+  {id:'done_25',   tier:'silver',   icon:'🥈', name:'Go-Getter',       desc:'Complete 25 tasks',                    hint:'25 tasks done — silver territory.',               check:d=>_done(d)>=25},
+  {id:'done_50',   tier:'gold',     icon:'🥇', name:'Champion',        desc:'Complete 50 tasks',                    hint:'50 completions — golden milestone.',              check:d=>_done(d)>=50},
+  {id:'done_100',  tier:'platinum', icon:'💎', name:'Centurion',       desc:'Complete 100 tasks',                   hint:'100 done — only the dedicated reach here.',       check:d=>_done(d)>=100},
+  {id:'done_250',  tier:'legendary',icon:'🌟', name:'Legend',          desc:'Complete 250 tasks',                   hint:'250 completions — you are the legend.',           check:d=>_done(d)>=250},
+  {id:'done_500',  tier:'legendary',icon:'👑', name:'Immortal',        desc:'Complete 500 tasks',                   hint:'500 done — truly immortal work ethic.',           check:d=>_done(d)>=500},
+
+  // ══════════════════════════════════════════
+  // 🔥  DAILY STREAKS
+  // ══════════════════════════════════════════
+  {id:'streak_3',  tier:'bronze',   icon:'🔥', name:'Spark',           desc:'Study 3 days in a row',               hint:'Open the app and work 3 consecutive days.',       check:d=>_streak(d)>=3},
+  {id:'streak_7',  tier:'silver',   icon:'🔥', name:'On Fire',         desc:'7-day study streak',                   hint:'One week straight — keep the fire burning.',      check:d=>_streak(d)>=7},
+  {id:'streak_14', tier:'gold',     icon:'🔥', name:'Blazing',         desc:'14-day study streak',                  hint:'Two weeks of daily study.',                       check:d=>_streak(d)>=14},
+  {id:'streak_30', tier:'platinum', icon:'⚡', name:'Unstoppable',     desc:'30-day study streak',                  hint:'A full month without missing a day.',             check:d=>_streak(d)>=30},
+  {id:'streak_60', tier:'legendary',icon:'💥', name:'Iron Will',       desc:'60-day study streak',                  hint:'Two months — pure discipline.',                   check:d=>_streak(d)>=60},
+  {id:'streak_100',tier:'legendary',icon:'🌠', name:'Century Streak',  desc:'100-day study streak',                 hint:'100 days straight — almost impossible.',          check:d=>_streak(d)>=100},
+  {id:'streak_365',tier:'legendary',icon:'🏰', name:'Eternal Flame',   desc:'365-day streak — one full year!',      hint:'Study every single day for a year.',              check:d=>_streak(d)>=365},
+
+  // ══════════════════════════════════════════
+  // 📅  CUMULATIVE DAYS ACTIVE
+  // ══════════════════════════════════════════
+  {id:'days_7',    tier:'bronze',   icon:'📅', name:'Week One',        desc:'Active on 7 different days',           hint:'Come back 7 different days total.',               check:d=>_daysActive(d)>=7},
+  {id:'days_30',   tier:'silver',   icon:'📆', name:'Monthly',         desc:'Active on 30 different days',          hint:'30 different days of study.',                     check:d=>_daysActive(d)>=30},
+  {id:'days_100',  tier:'gold',     icon:'🗓️', name:'Century',         desc:'Active on 100 different days',         hint:'100 days of studying — gold standard.',           check:d=>_daysActive(d)>=100},
+  {id:'days_200',  tier:'platinum', icon:'📜', name:'Dedicated',       desc:'Active on 200 different days',         hint:'200 days — you\'re truly committed.',             check:d=>_daysActive(d)>=200},
+  {id:'days_365',  tier:'legendary',icon:'🎖️', name:'Year-Round',      desc:'Active on 365 different days',         hint:'365 days of study over your lifetime.',           check:d=>_daysActive(d)>=365},
+
+  // ══════════════════════════════════════════
+  // 📋  EXAMS
+  // ══════════════════════════════════════════
+  {id:'exam_1',    tier:'bronze',   icon:'📋', name:'Exam Ready',      desc:'Add your first exam',                  hint:'Track your first upcoming exam.',                 check:d=>d.exams.length>=1},
+  {id:'exam_3',    tier:'silver',   icon:'📌', name:'Test Taker',      desc:'Add 3 exams',                          hint:'Tracking 3 exams — juggling like a pro.',        check:d=>d.exams.length>=3},
+  {id:'exam_5',    tier:'gold',     icon:'🎯', name:'Exam Hunter',     desc:'Add 5 exams',                          hint:'5 exams on your radar.',                          check:d=>d.exams.length>=5},
+  {id:'exam_10',   tier:'platinum', icon:'🏛️', name:'Exam Veteran',    desc:'Add 10 exams',                         hint:'10 exams tracked — true veteran.',                check:d=>d.exams.length>=10},
+
+  // ══════════════════════════════════════════
+  // 🎯  HIGH PRIORITY TASKS DONE
+  // ══════════════════════════════════════════
+  {id:'high_5',    tier:'bronze',   icon:'🎯', name:'Sharp Focus',     desc:'Complete 5 high-priority tasks',       hint:'Finish 5 tasks marked as High priority.',        check:d=>_highDone(d)>=5},
+  {id:'high_20',   tier:'silver',   icon:'🎖️', name:'Priority Pro',    desc:'Complete 20 high-priority tasks',      hint:'20 high-priority tasks crushed.',                 check:d=>_highDone(d)>=20},
+  {id:'high_50',   tier:'gold',     icon:'⚔️', name:'Warrior',         desc:'Complete 50 high-priority tasks',      hint:'50 high-priority tasks — warrior mindset.',      check:d=>_highDone(d)>=50},
+  {id:'high_100',  tier:'platinum', icon:'🦅', name:'Eagle Eye',       desc:'Complete 100 high-priority tasks',     hint:'100 high-priority tasks — elite focus.',          check:d=>_highDone(d)>=100},
+
+  // ══════════════════════════════════════════
+  // 🎓  COURSE COMPLETION
+  // ══════════════════════════════════════════
+  {id:'comp_1',    tier:'silver',   icon:'🎓', name:'Graduate',        desc:'Complete your first course',           hint:'Mark a course as Completed.',                     check:d=>d.courses.filter(c=>c.status==='Completed').length>=1},
+  {id:'comp_3',    tier:'gold',     icon:'🏆', name:'Triple Crown',    desc:'Complete 3 courses',                   hint:'Finish 3 full courses.',                          check:d=>d.courses.filter(c=>c.status==='Completed').length>=3},
+  {id:'comp_5',    tier:'platinum', icon:'💎', name:'Completionist',   desc:'Complete 5 courses',                   hint:'5 courses fully done — elite.',                   check:d=>d.courses.filter(c=>c.status==='Completed').length>=5},
+  {id:'comp_10',   tier:'legendary',icon:'🌟', name:'Master',          desc:'Complete 10 courses',                  hint:'10 completed courses — legendary.',               check:d=>d.courses.filter(c=>c.status==='Completed').length>=10},
+
+  // ══════════════════════════════════════════
+  // 🔐  SECRET / HIDDEN
+  // ══════════════════════════════════════════
+  {id:'goal_set',  tier:'secret',   icon:'🎯', name:'Goal Setter',     desc:'Set your study goal',                  hint:'Set a goal in the Home page.',                    check:d=>!!(d.goal&&d.goal.trim())},
+  {id:'night_owl', tier:'secret',   icon:'🦉', name:'Night Owl',       desc:'Using the app after midnight',         hint:'Study late into the night to discover this.',     check:d=>_hour()>=0&&_hour()<4},
+  {id:'early_bird',tier:'secret',   icon:'🐦', name:'Early Bird',      desc:'Using the app before 6 AM',            hint:'Rise before the sun to unlock this.',             check:d=>_hour()>=4&&_hour()<6},
+  {id:'collector', tier:'secret',   icon:'💼', name:'Collector',       desc:'Have both courses and exams at once',  hint:'Track both courses and exams simultaneously.',    check:d=>d.courses.length>=3&&d.exams.length>=3},
+  {id:'overachiever',tier:'secret', icon:'🚀', name:'Overachiever',    desc:'Complete more tasks than you created in a week', hint:'Your completion rate is extraordinary.',  check:d=>_done(d)>=d.tasks.length&&d.tasks.length>=10},
+  {id:'january',   tier:'secret',   icon:'🎆', name:'Fresh Start',     desc:'Using the app in January',             hint:'Start the new year strong.',                      check:d=>_month()===0},
+  {id:'comeback',  tier:'secret',   icon:'💫', name:'Comeback Kid',    desc:'Logged in after a long break',         hint:'Return after some time away.',                    check:d=>_daysActive(d)>=2&&_streak(d)===1},
+  {id:'perfectionist',tier:'secret',icon:'✨', name:'Perfectionist',   desc:'Have a course with 100% task completion',hint:'Get every task done in a single course.',      check:d=>d.courses.some(c=>{const t=d.tasks.filter(x=>x.courseId===c.id);return t.length>=5&&t.every(x=>x.done);})},
 ];
 
 let DB = {
@@ -2473,12 +2616,44 @@ function refreshSettings() {
 }
 
 // ---- ACHIEVEMENTS ----
+let _achieveFilter = 'all';
+function filterAchievements(f, el) {
+  _achieveFilter = f;
+  document.querySelectorAll('.achieve-filter').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
+  renderAchievements();
+}
+function _tierLabel(tier){
+  return {bronze:'🥉 Bronze',silver:'🥈 Silver',gold:'🥇 Gold',platinum:'💎 Platinum',legendary:'👑 Legendary',secret:'🔐 Secret'}[tier]||tier;
+}
 function renderAchievements() {
-  const grid=document.getElementById('achievements-grid');
-  const count=document.getElementById('achieve-count');
-  const earned=ACHIEVEMENTS.filter(a=>a.check(DB));
-  if(count) count.textContent=`${earned.length} / ${ACHIEVEMENTS.length}`;
-  if(grid) grid.innerHTML=ACHIEVEMENTS.map(a=>{const isEarned=a.check(DB);return`<div class="achievement-card ${isEarned?'earned':''}">${isEarned?'<div class="achievement-badge">✓ EARNED</div>':''}<div class="achievement-icon">${a.icon}</div><div class="achievement-name">${a.name}</div><div class="achievement-desc">${a.desc}</div></div>`;}).join('');
+  const grid = document.getElementById('achievements-grid');
+  const count = document.getElementById('achieve-count');
+  const earned = ACHIEVEMENTS.filter(a => a.check(DB));
+  if(count) count.textContent = `${earned.length} / ${ACHIEVEMENTS.length}`;
+  let list = ACHIEVEMENTS;
+  if(_achieveFilter === 'earned') list = ACHIEVEMENTS.filter(a => a.check(DB));
+  else if(_achieveFilter !== 'all') list = ACHIEVEMENTS.filter(a => a.tier === _achieveFilter);
+  if(!grid) return;
+  if(list.length === 0){
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:24px 0;color:var(--text3);font-size:13px;">No achievements in this category yet.</div>';
+    return;
+  }
+  const tierOrder = {bronze:0,silver:1,gold:2,platinum:3,legendary:4,secret:5};
+  list = [...list].sort((a,b)=>{
+    const ae = a.check(DB)?0:1, be = b.check(DB)?0:1;
+    if(ae!==be) return ae-be;
+    return (tierOrder[a.tier]||0)-(tierOrder[b.tier]||0);
+  });
+  grid.innerHTML = list.map(a=>{
+    const isEarned = a.check(DB);
+    return `<div class="achievement-card ${isEarned?'earned':'locked'} tier-${a.tier}">
+      <div class="tier-badge ${a.tier}">${_tierLabel(a.tier)}</div>
+      <div class="achievement-icon">${isEarned?a.icon:'🔒'}</div>
+      <div class="achievement-name">${a.name}</div>
+      <div class="achievement-desc">${isEarned?a.desc:a.hint}</div>
+    </div>`;
+  }).join('');
 }
 
 function checkAchievements() {
@@ -2497,6 +2672,8 @@ function showAchievementPopup(a) {
   const popup=document.getElementById('achieve-popup');
   document.getElementById('achieve-popup-icon').textContent=a.icon;
   document.getElementById('achieve-popup-name').textContent=a.name;
+  const titleEl=document.getElementById('achieve-popup-title');
+  if(titleEl) titleEl.textContent = _tierLabel(a.tier)+' UNLOCKED';
   popup.classList.add('show');
   confetti();
   setTimeout(()=>popup.classList.remove('show'),3500);
