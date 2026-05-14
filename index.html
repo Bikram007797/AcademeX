@@ -121,7 +121,7 @@ html, body {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
-#splash.hide { opacity: 0; transform: scale(0.97); pointer-events: none; display: none; }
+#splash.hide { opacity: 0; transform: scale(0.97); pointer-events: none; }
 
 .splash-logo {
   width: 96px; height: 96px; border-radius: 24px;
@@ -1657,6 +1657,19 @@ html, body {
    Firebase-connected, fully featured
    =================================================== */
 
+// ---- SPLASH HELPER ----
+function hideSplash() {
+  const splash = document.getElementById('splash');
+  if(!splash || splash.style.display === 'none') return;
+  splash.classList.add('hide');
+  setTimeout(() => { splash.style.display = 'none'; }, 700);
+}
+// Safety net: force-hide splash after 8s no matter what (network failures, etc.)
+setTimeout(() => {
+  const s = document.getElementById('splash');
+  if(s && s.style.display !== 'none' && !s.classList.contains('hide')) hideSplash();
+}, 8000);
+
 // ---- FIREBASE CONFIG ----
 const firebaseConfig = {
   apiKey: "AIzaSyBYMJuPHTh7PPHHW2hKu9YezH0EYOAXoOY",
@@ -1840,17 +1853,14 @@ auth.onAuthStateChanged(async (user) => {
     buildSwatches('em-color-swatches');
     buildEmojiPicker();
     showApp();
-    document.getElementById('splash').classList.add('hide'); // ← ADD THIS LINE
+    hideSplash();
   } else {
     currentUser = null;
     document.getElementById('main-app').classList.remove('show');
     document.getElementById('main-app').style.display = 'none';
     document.getElementById('auth-screen').style.display = '';
     document.getElementById('auth-screen').classList.remove('hide');
-    // Splash
- setTimeout(() => {
-  document.getElementById('splash').classList.add('hide');
-}, 1500);
+    setTimeout(() => { hideSplash(); }, 1500);
     buildSwatches('cm-color-swatches');
     buildSwatches('em-color-swatches');
     buildEmojiPicker();
@@ -2199,18 +2209,15 @@ function renderExamCard(e) {
   if(coverType==='pattern') {
     const pat = getCoverPatterns(e.id).find(p=>p.id===coverVal)||getCoverPatterns(e.id)[0];
     coverInner = `<div style="position:absolute;inset:0;background:${grad}"></div>
-     coverInner = `<div style="position:absolute;inset:0;background:${grad}"></div>
   <div style="position:absolute;inset:0;opacity:0.85">${pat.svg}</div>
-  <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5))">${emoji}</div>
-  <div class="cc-status-badge ${statusClass(c.status)}">${c.status}</div>
-  ${nameOverlay}`;
-      ${e.year?`<div style="position:absolute;top:8px;left:12px;font-size:11px;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:1px">${e.year}</div>`:''}`;
+  <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5))">${examStatusEmoji(e.status)}</div>
+  ${e.year?`<div style="position:absolute;top:8px;left:12px;font-size:11px;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:1px">${e.year}</div>`:''}
+  <div style="position:absolute;top:8px;right:10px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;backdrop-filter:blur(10px);background:rgba(0,0,0,0.3);color:rgba(255,255,255,0.8)">${e.status||'Not Started'}</div>`;
   } else {
-   coverInner = `<div class="cc-cover-gradient" style="background:${grad}"></div>
-  <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5))">${emoji}</div>
-  <div class="cc-status-badge ${statusClass(c.status)}">${c.status}</div>
-  ${nameOverlay}`;
-      ${e.year?`<div style="position:absolute;top:8px;left:12px;font-size:11px;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:1px">${e.year}</div>`:''}`;
+    coverInner = `<div class="cc-cover-gradient" style="background:${grad}"></div>
+  <div style="position:absolute;bottom:10px;left:12px;font-size:1.8rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5))">${examStatusEmoji(e.status)}</div>
+  ${e.year?`<div style="position:absolute;top:8px;left:12px;font-size:11px;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:1px">${e.year}</div>`:''}
+  <div style="position:absolute;top:8px;right:10px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;backdrop-filter:blur(10px);background:rgba(0,0,0,0.3);color:rgba(255,255,255,0.8)">${e.status||'Not Started'}</div>`;
   }
   return `<div class="exam-card" onclick="openExamModal('${e.id}')" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all 0.3s;margin-bottom:14px;display:flex;flex-direction:column">
     <div style="height:95px;position:relative;overflow:hidden">${coverInner}</div>
@@ -2835,15 +2842,14 @@ function doConfirmAction(){if(_confirmCb)_confirmCb();closeModal('confirm-modal'
 // ---- THEME ----
 function toggleTheme(){
   haptic();
-  DB.theme = DB.theme==='light'?'dark':'light';
+  DB.theme = DB.theme==='dark'?'light':'dark';
   applyTheme(DB.theme); save(); refreshSettings();
-  // Re-render cards so patterns update for new theme
   refreshHome(); refreshCourses(); refreshExams();
 }
 function applyTheme(t) {
-  document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : '');
+  document.documentElement.setAttribute('data-theme', t === 'dark' ? 'light' : '');
   const metaTheme = document.getElementById('meta-theme-color');
-  if (metaTheme) metaTheme.content = t === 'light' ? '#141010' : '#1a150f';
+  if (metaTheme) metaTheme.content = t === 'dark' ? '#141010' : '#1a150f';
 }
 
 // ---- SIDEMENU ----
